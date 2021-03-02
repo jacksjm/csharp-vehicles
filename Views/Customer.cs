@@ -32,6 +32,7 @@ namespace View
             List<Model.Customer> customers = Controller.Customer.ListCustomers();
 
             foreach(Model.Customer customer in customers) {
+                Console.WriteLine("---------------------------");
                 Console.WriteLine(customer);
             }
         }
