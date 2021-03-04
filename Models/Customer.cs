@@ -162,5 +162,9 @@ namespace Model {
         public static void AddCustomer (Customer customer) {
             customers.Add (customer);
         }
+
+        public static Customer GetCustomer(int Id) {
+            return customers[Id];
+        }
     }
 }
