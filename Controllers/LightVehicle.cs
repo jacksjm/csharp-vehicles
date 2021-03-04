@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 
 namespace Controller {
-    public class HeavyVehicle {
-        public static Model.HeavyVehicle CreateHeavyVehicle (
+    public class LightVehicle {
+        public static Model.LightVehicle CreateLightVehicle (
             string Brand,
             string Model,
             string Year,
@@ -21,7 +21,7 @@ namespace Controller {
                 throw new Exception ("Valor não pode ser negativo");
             }
 
-            return new Model.HeavyVehicle (
+            return new Model.LightVehicle (
                 Brand,
                 Model,
                 ConvertYear,
@@ -30,8 +30,8 @@ namespace Controller {
             );
         }
 
-        public static List<Model.HeavyVehicle> GetHeavyVehicles () {
-            return Model.HeavyVehicle.GetHeavyVehicles ();
+        public static List<Model.LightVehicle> GetLightVehicles () {
+            return Model.LightVehicle.GetLightVehicles ();
         }
     }
 }

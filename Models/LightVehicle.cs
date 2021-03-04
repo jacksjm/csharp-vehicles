@@ -2,26 +2,26 @@ using System;
 using System.Collections.Generic;
 
 namespace Model {
-    public class HeavyVehicle : Vehicle {
+    public class LightVehicle : Vehicle {
         public int Id { set; get; }
-        public string Restrictions { set; get; }
+        public string Color { set; get; }
 
-        public static readonly List<HeavyVehicle> HeavyVehicles = new ();
-        public HeavyVehicle (
+        public static readonly List<LightVehicle> LightVehicles = new ();
+        public LightVehicle (
             string Brand,
             string Model,
             int Year,
             double Price,
-            string Restrictions
+            string Color
         ) : base (Brand, Model, Year, Price) {
-            this.Id = HeavyVehicles.Count;
-            this.Restrictions = Restrictions;
+            this.Id = LightVehicles.Count;
+            this.Color = Color;
 
-            HeavyVehicles.Add (this);
+            LightVehicles.Add (this);
         }
 
         public override string ToString () {
-            return base.ToString () + "\nRestrições: " + this.Restrictions;
+            return base.ToString () + "\nCor: " + this.Color;
         }
 
         public override bool Equals (object obj) {
@@ -31,7 +31,7 @@ namespace Model {
             if (obj.GetType () != this.GetType ()) {
                 return false;
             }
-            HeavyVehicle heavyVehicle = (HeavyVehicle) obj;
+            LightVehicle heavyVehicle = (LightVehicle) obj;
             return this.GetHashCode () == heavyVehicle.GetHashCode ();
         }
 
@@ -39,8 +39,8 @@ namespace Model {
             return HashCode.Combine (this.Id);
         }
 
-        public static List<HeavyVehicle> GetHeavyVehicles () {
-            return HeavyVehicles;
+        public static List<LightVehicle> GetLightVehicles () {
+            return LightVehicles;
         }
     }
 }

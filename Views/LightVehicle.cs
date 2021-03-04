@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace View {
-    public class HeavyVehicle {
+    public class LightVehicle {
         public static void CreateVehicle () {
             Console.WriteLine ("Informe a Marca do Veículo: ");
             string Brand = Console.ReadLine ();
@@ -12,16 +12,16 @@ namespace View {
             string Year = Console.ReadLine ();
             Console.WriteLine ("Informe o Preço de Locação do Veículo: ");
             string Price = Console.ReadLine ();
-            Console.WriteLine ("Informe o Restrições do Veículo: ");
-            string Restrictions = Console.ReadLine ();
+            Console.WriteLine ("Informe a Cor do Veículo: ");
+            string Color = Console.ReadLine ();
 
-            Controller.HeavyVehicle.CreateHeavyVehicle (Brand, Model, Year, Price, Restrictions);
+            Controller.LightVehicle.CreateLightVehicle (Brand, Model, Year, Price, Color);
         }
 
         public static void ListVehicles () {
-            List<Model.HeavyVehicle> heavyVehicles = Controller.HeavyVehicle.GetHeavyVehicles ();
+            List<Model.LightVehicle> heavyVehicles = Controller.LightVehicle.GetLightVehicles ();
 
-            foreach (Model.HeavyVehicle vehicle in heavyVehicles) {
+            foreach (Model.LightVehicle vehicle in heavyVehicles) {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (vehicle);
             }
