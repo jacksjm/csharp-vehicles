@@ -8,9 +8,9 @@ namespace csharp_vehicles
         /// Start the system
         /// </summary>
         /// <param name="args"></param>
-        public static void Main(string[] args)
+        public static void Main()
         {
-            int opt = 0;
+            int opt;
             Console.WriteLine("Bem vindo a nossa revenda");
             // Always repeat until the user leaves
             do {
@@ -19,6 +19,8 @@ namespace csharp_vehicles
                 Console.WriteLine("2 - Lista de Clientes");
                 Console.WriteLine("3 - Cadastrar Veículo Pesado");
                 Console.WriteLine("4 - Lista de Veículos Pesados");
+                Console.WriteLine("5 - Cadastrar Veículo Leve");
+                Console.WriteLine("6 - Lista de Veículos Leves");
                 Console.WriteLine("0 - Sair");
                 // Get the user option
                 opt = Convert.ToInt32(Console.ReadLine());
@@ -37,6 +39,12 @@ namespace csharp_vehicles
                         break;
                     case 4:
                         View.HeavyVehicle.ListVehicles();
+                        break;
+                    case 5:
+                        View.LightVehicle.CreateVehicle();
+                        break;
+                    case 6:
+                        View.LightVehicle.ListVehicles();
                         break;
                     default:
                         Console.WriteLine("Operação Inválida.");
