@@ -1,19 +1,17 @@
 using System;
+using Database;
 using System.Collections.Generic;
 
 namespace Model {
     /// <summary>
     /// Represents the Customer abstraction
     /// </summary>
-    public class Customer {
+    public class Customer : Database<Customer> {
         private int Id; // Identificador Único (ID)
         private string Name; // Nome
         private string Birth; // Data de Nascimento
         private string Identification; // C.P.F.
         private int ReturnDays; // Dias para Devolução
-
-        // Generates a List to use a Fake Database
-        private static readonly List<Customer> customers = new ();
 
         /// <summary>
         /// Constructor to Customer object
@@ -28,13 +26,13 @@ namespace Model {
             string Identification,
             int ReturnDays
         ) {
-            this.Id = customers.Count;
+            this.Id = base.GetNewId();
             this.Name = Name;
             this.Birth = Birth;
             this.Identification = Identification;
             this.ReturnDays = ReturnDays;
 
-            customers.Add (this);
+            base.AddItem (this);
         }
 
         /// <summary>
@@ -145,26 +143,6 @@ namespace Model {
                 hash = (hash * 16777619) ^ this.GetId ().GetHashCode ();
                 return hash;
             }
-        }
-
-        /// <summary>
-        /// Returns the fake database informations
-        /// </summary>
-        /// <returns>Returns the customer list collection</returns>
-        public static List<Customer> GetCustomers () {
-            return customers;
-        }
-
-        /// <summary>
-        /// Inserts a new customer on Fake Database
-        /// </summary>
-        /// <param name="customer">The customer's object</param>
-        public static void AddCustomer (Customer customer) {
-            customers.Add (customer);
-        }
-
-        public static Customer GetCustomer(int Id) {
-            return customers[Id];
         }
     }
 }

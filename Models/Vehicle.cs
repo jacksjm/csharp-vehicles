@@ -1,7 +1,8 @@
 using System;
+using Database;
 
 namespace Model {
-    public abstract class Vehicle {
+    public abstract class Vehicle<T> : Database<T> {
         protected string Brand { set; get; } // Marca
         protected string Model { set; get; } // Modelo
         protected int Year { set; get; } // Ano

@@ -31,7 +31,7 @@ namespace Controller
         }
 
         public static List<Model.Rent> GetRents() {
-            return Model.Rent.GetRents();
+            return Model.Rent.GetList();
         }
     }
 }

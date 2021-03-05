@@ -1,23 +1,23 @@
 using System;
 using System.Collections.Generic;
+using Database;
 
 namespace Model
 {
-    public class Rent {
+    public class Rent : Database<Rent> {
         public int Id {set; get;} // Identificador Único (ID)
         public Customer Customer { set; get; } // Cliente
         public DateTime RentDate { set; get; }// Data de Locação
-
-        public static readonly List<Rent> Rents = new ();
 
         public Rent(
             Customer Customer, 
             DateTime RentDate
         ) {
+            this.Id = base.GetNewId();
             this.Customer = Customer;
             this.RentDate = RentDate;
 
-            Rents.Add(this);
+            base.AddItem(this);
         }
 
         public override string ToString()
@@ -45,10 +45,6 @@ namespace Model
 
         public override int GetHashCode () {
             return HashCode.Combine (this.Id);
-        }
-
-        public static List<Rent> GetRents() {
-            return Rents;
         }
 
     }

@@ -31,7 +31,7 @@ namespace Controller {
         }
 
         public static List<Model.LightVehicle> GetLightVehicles () {
-            return Model.LightVehicle.GetLightVehicles ();
+            return Model.LightVehicle.GetList ();
         }
     }
 }

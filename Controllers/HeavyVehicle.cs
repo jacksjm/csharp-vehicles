@@ -31,7 +31,7 @@ namespace Controller {
         }
 
         public static List<Model.HeavyVehicle> GetHeavyVehicles () {
-            return Model.HeavyVehicle.GetHeavyVehicles ();
+            return Model.HeavyVehicle.GetList ();
         }
     }
 }

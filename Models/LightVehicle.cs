@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 
 namespace Model {
-    public class LightVehicle : Vehicle {
+    public class LightVehicle : Vehicle<LightVehicle> {
         public int Id { set; get; }
         public string Color { set; get; }
 
-        public static readonly List<LightVehicle> LightVehicles = new ();
         public LightVehicle (
             string Brand,
             string Model,
@@ -14,10 +13,10 @@ namespace Model {
             double Price,
             string Color
         ) : base (Brand, Model, Year, Price) {
-            this.Id = LightVehicles.Count;
+            this.Id = base.GetNewId();
             this.Color = Color;
 
-            LightVehicles.Add (this);
+            base.AddItem (this);
         }
 
         public override string ToString () {
@@ -37,10 +36,6 @@ namespace Model {
 
         public override int GetHashCode () {
             return HashCode.Combine (this.Id);
-        }
-
-        public static List<LightVehicle> GetLightVehicles () {
-            return LightVehicles;
         }
     }
 }
