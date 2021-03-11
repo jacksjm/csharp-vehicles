@@ -6,11 +6,11 @@ namespace Model {
     /// Represents the Customer abstraction
     /// </summary>
     public class Customer {
-        private int Id; // Identificador Único (ID)
-        private string Name; // Nome
-        private string Birth; // Data de Nascimento
-        private string Identification; // C.P.F.
-        private int ReturnDays; // Dias para Devolução
+        public int Id { set; get; } // Identificador Único (ID)
+        public string Name { set; get; } // Nome
+        public DateTime Birth { set; get; } // Data de Nascimento
+        public string Identification { set; get; } // C.P.F.
+        public int ReturnDays { set; get; } // Dias para Devolução
 
         // Generates a List to use a Fake Database
         private static readonly List<Customer> customers = new ();
@@ -24,7 +24,7 @@ namespace Model {
         /// <param name="ReturnDays">The number of return days the customer has</param>
         public Customer (
             string Name,
-            string Birth,
+            DateTime Birth,
             string Identification,
             int ReturnDays
         ) {
@@ -38,83 +38,16 @@ namespace Model {
         }
 
         /// <summary>
-        /// The ID Set's
-        /// </summary>
-        /// <param name="Id">ID value</param>
-        public void SetId (int Id) {
-            this.Id = Id;
-        }
-        /// <summary>
-        /// The Name Set's
-        /// </summary>
-        /// <param name="Name">Name value</param>
-        public void SetName (string Name) {
-            this.Name = Name;
-        }
-        /// <summary>
-        /// The Birth Set's
-        /// </summary>
-        /// <param name="Birth">Birth value</param>
-        public void SetBirth (string Birth) {
-            this.Birth = Birth;
-        }
-        /// <summary>
-        /// The Identification Set's
-        /// </summary>
-        /// <param name="Identification">Identification value</param>
-        public void SetIdentification (string Identification) {
-            this.Identification = Identification;
-        }
-        /// <summary>
-        /// The Return Days Set's
-        /// </summary>
-        /// <param name="ReturnDays"></param>
-        public void SetReturnDays (int ReturnDays) {
-            this.ReturnDays = ReturnDays;
-        }
-
-        /// <summary>
-        /// The ID Get's
-        /// </summary>
-        /// <returns>Unique Identification of Customer</returns>
-        public int GetId () {
-            return this.Id;
-        }
-        /// <summary>
-        /// The Name Get's
-        /// </summary>
-        /// <returns>Customer Name value</returns>
-        public string GetName () {
-            return this.Name;
-        }
-        /// <summary>
-        /// The Birth Get's
-        /// </summary>
-        /// <returns>Customer Birth value</returns>
-        public string GetBirth () {
-            return this.Birth;
-        }
-        /// <summary>
-        /// The Identification Get's
-        /// </summary>
-        /// <returns>Customer Identification value</returns>
-        public string GetIdentification () {
-            return this.Identification;
-        }
-        /// <summary>
-        /// The Return Days Get's
-        /// </summary>
-        /// <returns>Customer Return Days value</returns>
-        public int GetReturnDays () {
-            return this.ReturnDays;
-        }
-
-        /// <summary>
         /// The value that represents the customer's text
         /// </summary>
         /// <returns>Customer's text</returns>
         public override string ToString () {
-            return $"Id: {this.GetId()} - Nome: {this.GetName()}";
+            return String.Format(
+                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d}",
+                this.Id,
+                this.Name,
+                this.Birth
+            );
         }
 
         /// <summary>
@@ -142,7 +75,7 @@ namespace Model {
             {
                 int hash = (int) 2166136261;
                 // Suitable nullity checks etc, of course :)
-                hash = (hash * 16777619) ^ this.GetId ().GetHashCode ();
+                hash = (hash * 16777619) ^ this.Id.GetHashCode ();
                 return hash;
             }
         }
