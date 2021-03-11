@@ -23,6 +23,7 @@ namespace csharp_vehicles
                 Console.WriteLine("6 - Lista de Veículos Leves");
                 Console.WriteLine("7 - Cadastrar Locação");
                 Console.WriteLine("8 - Lista de Locações");
+                Console.WriteLine("9 - Importar Informações");
                 Console.WriteLine("0 - Sair");
                 // Get the user option
                 opt = Convert.ToInt32(Console.ReadLine());
@@ -53,6 +54,9 @@ namespace csharp_vehicles
                         break;
                     case 8:
                         View.Rent.ListRents();
+                        break;
+                    case 9:
+                        View.Import.DBImport();
                         break;
                     default:
                         Console.WriteLine("Operação Inválida.");

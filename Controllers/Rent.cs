@@ -7,7 +7,8 @@ namespace Controller
     public class Rent {
         public static Model.Rent CreateRent(
             string IdCustomer,
-            string StringRentDate
+            string StringRentDate,
+            List<Model.LightVehicle> LightVehicles
         ) {
             Model.Customer Customer = Controller.Customer
                 .GetCustomer(Convert.ToInt32(IdCustomer));
@@ -27,7 +28,7 @@ namespace Controller
                 throw new Exception ("Data de Locação não pode ser maior que a data atual");
             }
 
-            return new Model.Rent(Customer, RentDate);
+            return new Model.Rent(Customer, RentDate, LightVehicles);
         }
 
         public static List<Model.Rent> GetRents() {

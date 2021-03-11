@@ -13,12 +13,12 @@ namespace Controller {
         /// <throw>Exception - Regex C.P.F.</throw>
         /// <throw>Exception - Regex Date</throw>
         /// <param name="Name">Customer's name</param>
-        /// /// <param name="Birth">Customer's birth</param>
+        /// <param name="Birth">Customer's birth</param>
         /// <param name="Identification">Customer's identification</param>
         /// <param name="ReturnDays">Customer's return days</param>
         public static Model.Customer CreateCustomer (
             string Name,
-            string Birth,
+            string StringBirth,
             string Identification,
             string ReturnDays
         ) {
@@ -28,9 +28,11 @@ namespace Controller {
                 throw new Exception ("C.P.F. Inválido");
             }
 
-            // Checks if the Birth is in the pattern 99/99/9999
-            Regex rgxDate = new ("^\\d{2}\\/\\d{2}\\/\\d{4}$");
-            if (!rgxDate.IsMatch (Birth)) {
+            DateTime Birth;
+
+            try {
+                Birth = Convert.ToDateTime(StringBirth);
+            } catch {
                 throw new Exception ("Data de Nascimento Inválida");
             }
 
