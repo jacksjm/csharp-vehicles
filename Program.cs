@@ -21,6 +21,8 @@ namespace csharp_vehicles
                 Console.WriteLine("4 - Lista de Veículos Pesados");
                 Console.WriteLine("5 - Cadastrar Veículo Leve");
                 Console.WriteLine("6 - Lista de Veículos Leves");
+                Console.WriteLine("7 - Cadastrar Locação");
+                Console.WriteLine("8 - Lista de Locações");
                 Console.WriteLine("0 - Sair");
                 // Get the user option
                 opt = Convert.ToInt32(Console.ReadLine());
@@ -45,6 +47,12 @@ namespace csharp_vehicles
                         break;
                     case 6:
                         View.LightVehicle.ListVehicles();
+                        break;
+                    case 7:
+                        View.Rent.CreateRent();
+                        break;
+                    case 8:
+                        View.Rent.ListRents();
                         break;
                     default:
                         Console.WriteLine("Operação Inválida.");

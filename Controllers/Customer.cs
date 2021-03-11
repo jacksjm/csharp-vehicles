@@ -58,5 +58,15 @@ namespace Controller {
         public static List<Model.Customer> ListCustomers () {
             return Model.Customer.GetCustomers ();
         }
+
+        public static Model.Customer GetCustomer(int Id) {
+            int ListLenght = Model.Customer.GetCustomers().Count;
+            
+            if (Id < 0 || ListLenght <= Id) {
+                throw new Exception("Id informado é inválido.");
+            }
+
+            return Model.Customer.GetCustomer(Id);
+        }
     }
 }
