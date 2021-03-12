@@ -33,5 +33,15 @@ namespace Controller {
         public static List<Model.HeavyVehicle> GetHeavyVehicles () {
             return Model.HeavyVehicle.GetHeavyVehicles ();
         }
+
+        public static Model.HeavyVehicle GetHeavyVehicle (int Id) {
+            int ListLenght = Model.HeavyVehicle.GetHeavyVehicles ().Count;
+
+            if (Id < 0 || ListLenght <= Id) {
+                throw new Exception ("Id informado é inválido.");
+            }
+
+            return Model.HeavyVehicle.GetHeavyVehicle (Id);
+        }
     }
 }
