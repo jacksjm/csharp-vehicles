@@ -23,7 +23,7 @@ namespace Model {
         }
 
         public override string ToString () {
-            return "Id: " + this.Id + "\n" + base.ToString () + "\nCor: " + this.Color;
+            return "Id: " + this.Id + " - " + base.ToString () + " - Cor: " + this.Color;
         }
 
         public override bool Equals (object obj) {
@@ -45,7 +45,7 @@ namespace Model {
             return LightVehicles;
         }
 
-        public static LightVehicle GetLightVehicle(int Id) {
+        public static LightVehicle GetLightVehicle (int Id) {
             return LightVehicles[Id];
         }
     }

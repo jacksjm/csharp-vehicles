@@ -25,6 +25,7 @@ namespace View {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (vehicle);
             }
+            Console.WriteLine ("---------------------------\n");
         }
     }
 }

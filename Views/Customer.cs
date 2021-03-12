@@ -29,11 +29,12 @@ namespace View {
         /// </summary>
         public static void ListCustomers () {
             List<Model.Customer> customers = Controller.Customer.ListCustomers ();
-
+            
             foreach (Model.Customer customer in customers) {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (customer);
             }
+            Console.WriteLine ("---------------------------\n");
         }
     }
 }

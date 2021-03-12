@@ -1,57 +1,73 @@
 using System;
 using System.Collections.Generic;
 
-namespace Model
-{
+namespace Model {
     public class Rent {
-        public int Id {set; get;} // Identificador Único (ID)
+        public int Id { set; get; } // Identificador Único (ID)
         public int CustomerId { set; get; } // Identificador Único do Cliente
         public Customer Customer { set; get; } // Cliente
-        public DateTime RentDate { set; get; }// Data de Locação
+        public DateTime RentDate { set; get; } // Data de Locação
 
         public List<RentLightVehicle> LightVehicles { set; get; }
+        public List<RentHeavyVehicle> HeavyVehicles { set; get; }
 
         public static readonly List<Rent> Rents = new ();
 
-        public Rent(
-            Customer Customer, 
+        public Rent (
+            Customer Customer,
             DateTime RentDate,
-            List<LightVehicle> LightVehicles
+            List<LightVehicle> LightVehicles,
+            List<HeavyVehicle> HeavyVehicles
         ) {
             this.Customer = Customer;
             this.CustomerId = Customer.Id;
             this.RentDate = RentDate;
             this.LightVehicles = new ();
+            this.HeavyVehicles = new ();
 
-            foreach (LightVehicle vehicle in LightVehicles)
-            {
+            foreach (LightVehicle vehicle in LightVehicles) {
                 RentLightVehicle rentLightVehicle = new (this, vehicle);
-                this.LightVehicles.Add(rentLightVehicle);
+                this.LightVehicles.Add (rentLightVehicle);
             }
-            
-            Rents.Add(this);
+
+            foreach (HeavyVehicle vehicle in HeavyVehicles) {
+                RentHeavyVehicle rentHeavyVehicle = new (this, vehicle);
+                this.HeavyVehicles.Add (rentHeavyVehicle);
+            }
+
+            Rents.Add (this);
         }
 
-        public override string ToString()
-        {
+        public override string ToString () {
             // Data da Locação: 04/03/2021
             // Id: 0 - Nome: João
-            string Print = String.Format(
-                "Data da Locação: {0:d}\nCliente: {1}", 
-                this.RentDate, 
+            string Print = String.Format (
+                "Data da Locação: {0:d} - Cliente: {1}",
+                this.RentDate,
                 this.Customer
             );
             Print += "\nVeículos Leves Locados: ";
-            foreach (RentLightVehicle vehicle in LightVehicles)
-            {
-                Print += "\n" + vehicle.LightVehicle;
+            if (LightVehicles.Count > 0) {
+                foreach (RentLightVehicle vehicle in LightVehicles) {
+                    Print += "\n    " + vehicle.LightVehicle;
+                }
+            } else {
+                Print += "\n    Nada Consta";
+            }
+
+            Print += "\nVeículos Pesados Locados: ";
+            if (HeavyVehicles.Count > 0) {
+                foreach (RentHeavyVehicle vehicle in HeavyVehicles) {
+                    Print += "\n    " + vehicle.HeavyVehicle;
+                }
+            } else {
+                Print += "\n    Nada Consta";
             }
 
             return Print;
         }
 
-        public override bool Equals(object obj)
-        {
+        public override bool Equals (object obj) {
             if (obj == null) {
                 return false;
             }
@@ -66,7 +82,7 @@ namespace Model
             return HashCode.Combine (this.Id);
         }
 
-        public static List<Rent> GetRents() {
+        public static List<Rent> GetRents () {
             return Rents;
         }
 

@@ -21,9 +21,9 @@ namespace Model {
 
         public override string ToString () {
             return "Marca: " + this.Brand +
-                "\nModelo: " + this.Model +
-                "\nAno: " + this.Year +
-                "\nPreço de Locação: " + String.Format ("{0:C}", this.Price);
+                " - Modelo: " + this.Model +
+                " - Ano: " + this.Year +
+                " - Preço de Locação: " + String.Format ("{0:C}", this.Price);
         }
     }
 }
