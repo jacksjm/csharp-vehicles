@@ -25,6 +25,8 @@ namespace Model {
             this.LightVehicles = new ();
             this.HeavyVehicles = new ();
 
+            Customer.Rents.Add(this);
+            
             foreach (LightVehicle vehicle in LightVehicles) {
                 RentLightVehicle rentLightVehicle = new (this, vehicle);
                 this.LightVehicles.Add (rentLightVehicle);
@@ -38,12 +40,34 @@ namespace Model {
             Rents.Add (this);
         }
 
+        public double GetRentValue() {
+            double total = 0;
+
+            foreach (RentLightVehicle vehicle in LightVehicles) {
+                total += vehicle.LightVehicle.Price;
+            }
+
+            foreach (RentHeavyVehicle vehicle in HeavyVehicles) {
+                total += vehicle.HeavyVehicle.Price;
+            }
+            
+            return total;
+        }
+
+        public DateTime GetReturnDate() {
+            int ReturnDays = this.Customer.ReturnDays;
+
+            return this.RentDate.AddDays(ReturnDays);
+        }
+
         public override string ToString () {
             // Data da Locação: 04/03/2021
             // Id: 0 - Nome: João
             string Print = String.Format (
-                "Data da Locação: {0:d} - Cliente: {1}",
+                "Data da Locação: {0:d} - Data da Devolução: {1:d} - Valor: {2:C}\nCliente: {3}",
                 this.RentDate,
+                this.GetReturnDate(),
+                this.GetRentValue(),
                 this.Customer
             );
             Print += "\nVeículos Leves Locados: ";

@@ -11,6 +11,7 @@ namespace Model {
         public DateTime Birth { set; get; } // Data de Nascimento
         public string Identification { set; get; } // C.P.F.
         public int ReturnDays { set; get; } // Dias para Devolução
+        public List<Rent> Rents { set; get; }
 
         // Generates a List to use a Fake Database
         private static readonly List<Customer> customers = new ();
@@ -33,6 +34,7 @@ namespace Model {
             this.Birth = Birth;
             this.Identification = Identification;
             this.ReturnDays = ReturnDays;
+            this.Rents = new ();
 
             customers.Add (this);
         }
@@ -43,10 +45,12 @@ namespace Model {
         /// <returns>Customer's text</returns>
         public override string ToString () {
             return String.Format(
-                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d}",
+                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d} - Dias p/ Devolução: {3} - Qtd. Locações {4}",
                 this.Id,
                 this.Name,
-                this.Birth
+                this.Birth,
+                this.ReturnDays,
+                this.Rents.Count
             );
         }
 

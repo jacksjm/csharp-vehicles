@@ -2,10 +2,10 @@ using System;
 
 namespace Model {
     public abstract class Vehicle {
-        protected string Brand { set; get; } // Marca
-        protected string Model { set; get; } // Modelo
-        protected int Year { set; get; } // Ano
-        protected double Price { set; get; } // Valor para locação
+        public string Brand { set; get; } // Marca
+        public string Model { set; get; } // Modelo
+        public int Year { set; get; } // Ano
+        public double Price { set; get; } // Valor para locação
 
         protected Vehicle (
             string Brand,
