@@ -57,12 +57,12 @@ namespace Controller {
         /// Gets the customer's lits
         /// </summary>
         /// <returns>Returns the customer list collection</returns>
-        public static List<Model.Customer> ListCustomers () {
+        public static IEnumerable<Model.Customer> ListCustomers () {
             return Model.Customer.GetCustomers ();
         }
 
         public static Model.Customer GetCustomer (int Id) {
-            int ListLenght = Model.Customer.GetCustomers ().Count;
+            int ListLenght = Model.Customer.GetCount();
 
             if (Id < 0 || ListLenght <= Id) {
                 throw new Exception ("Id informado é inválido.");

@@ -55,9 +55,7 @@ namespace View {
         }
 
         public static void ListRents () {
-            List<Model.Rent> Rents = Controller.Rent.GetRents ();
-
-            foreach (Model.Rent Rent in Rents) {
+            foreach (Model.Rent Rent in Controller.Rent.GetRents ()) {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (Rent);
             }

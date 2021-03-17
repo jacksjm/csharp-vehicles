@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Repository;
 
 namespace Model {
     public class RentLightVehicle {
@@ -8,8 +10,6 @@ namespace Model {
         public Rent Rent { set; get; }
         public int LightVehicleId { set; get; }
         public LightVehicle LightVehicle { set; get; }
-
-        public static readonly List<RentLightVehicle> database = new ();
 
         public RentLightVehicle (
             Rent Rent,
@@ -20,7 +20,15 @@ namespace Model {
             this.LightVehicle = LightVehicle;
             this.LightVehicleId = LightVehicle.Id;
 
-            LightVehicle.Rents.Add (this);
+            Context.rentsLightVehicles.Add(this);
+        }
+
+        public static IEnumerable<RentLightVehicle> GetVehicles(int RentId) {
+            return from vehicle in Context.rentsLightVehicles where vehicle.RentId == RentId select vehicle;
+        }
+
+        public static int GetCount(int RentId) {
+            return GetVehicles(RentId).Count();
         }
     }
 }

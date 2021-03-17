@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Repository;
 
 namespace Model {
     public class HeavyVehicle : Vehicle {
         public int Id { set; get; }
         public string Restrictions { set; get; }
-        public List<RentHeavyVehicle> Rents { set; get; }
 
-        public static readonly List<HeavyVehicle> HeavyVehicles = new ();
         public HeavyVehicle (
             string Brand,
             string Model,
@@ -15,11 +15,10 @@ namespace Model {
             double Price,
             string Restrictions
         ) : base (Brand, Model, Year, Price) {
-            this.Id = HeavyVehicles.Count;
+            this.Id = Context.heavyVehicles.Count;
             this.Restrictions = Restrictions;
-            this.Rents = new ();
 
-            HeavyVehicles.Add (this);
+            Context.heavyVehicles.Add (this);
         }
 
         public override string ToString () {
@@ -41,12 +40,20 @@ namespace Model {
             return HashCode.Combine (this.Id);
         }
 
-        public static List<HeavyVehicle> GetHeavyVehicles () {
-            return HeavyVehicles;
+        public static IEnumerable<HeavyVehicle> GetHeavyVehicles () {
+            return from heavyVehicle in Context.heavyVehicles select heavyVehicle;
+        }
+
+        public static int GetCount() {
+            return GetHeavyVehicles().Count();
         }
 
         public static HeavyVehicle GetHeavyVehicle (int Id) {
-            return HeavyVehicles[Id];
+            return (
+                from heavyVehicle in Context.heavyVehicles 
+                where heavyVehicle.Id == Id 
+                select heavyVehicle
+            ).First();
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using Repository;
 
 namespace Model {
     /// <summary>
@@ -11,10 +13,6 @@ namespace Model {
         public DateTime Birth { set; get; } // Data de Nascimento
         public string Identification { set; get; } // C.P.F.
         public int ReturnDays { set; get; } // Dias para Devolução
-        public List<Rent> Rents { set; get; }
-
-        // Generates a List to use a Fake Database
-        private static readonly List<Customer> customers = new ();
 
         /// <summary>
         /// Constructor to Customer object
@@ -29,14 +27,13 @@ namespace Model {
             string Identification,
             int ReturnDays
         ) {
-            this.Id = customers.Count;
+            this.Id = Context.customers.Count;
             this.Name = Name;
             this.Birth = Birth;
             this.Identification = Identification;
             this.ReturnDays = ReturnDays;
-            this.Rents = new ();
 
-            customers.Add (this);
+            Context.customers.Add (this);
         }
 
         /// <summary>
@@ -50,7 +47,7 @@ namespace Model {
                 this.Name,
                 this.Birth,
                 this.ReturnDays,
-                this.Rents.Count
+                Rent.GetCount(this.Id)
             );
         }
 
@@ -88,8 +85,12 @@ namespace Model {
         /// Returns the fake database informations
         /// </summary>
         /// <returns>Returns the customer list collection</returns>
-        public static List<Customer> GetCustomers () {
-            return customers;
+        public static IEnumerable<Customer> GetCustomers () {
+            return from customer in Context.customers select customer;
+        }
+
+        public static int GetCount () {
+            return GetCustomers().Count();
         }
 
         /// <summary>
@@ -97,11 +98,21 @@ namespace Model {
         /// </summary>
         /// <param name="customer">The customer's object</param>
         public static void AddCustomer (Customer customer) {
-            customers.Add (customer);
+            Context.customers.Add (customer);
         }
 
         public static Customer GetCustomer(int Id) {
-            return customers[Id];
+            // Context db = new Context();
+
+            // SELECT * FROM customer;
+            // from customer in Context.customers select customer;
+
+            // "SELECT * FROM customer WHERE id = '" + Id + "'";
+            IEnumerable<Customer> query = from customer in Context.customers where customer.Id == Id select customer;
+
+            return query.First();
+            
+            // return Context.customers[Id];
         }
     }
 }

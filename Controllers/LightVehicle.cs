@@ -30,12 +30,12 @@ namespace Controller {
             );
         }
 
-        public static List<Model.LightVehicle> GetLightVehicles () {
+        public static IEnumerable<Model.LightVehicle> GetLightVehicles () {
             return Model.LightVehicle.GetLightVehicles ();
         }
 
         public static Model.LightVehicle GetLightVehicle (int Id) {
-            int ListLenght = Model.LightVehicle.GetLightVehicles ().Count;
+            int ListLenght = Model.LightVehicle.GetCount();
 
             if (Id < 0 || ListLenght <= Id) {
                 throw new Exception ("Id informado é inválido.");
