@@ -8,7 +8,7 @@ namespace Controller {
             string Model,
             string Year,
             string Price,
-            string Restrictions
+            string Color
         ) {
             int ConvertYear = Convert.ToInt32 (Year);
             double ConvertPrice = Convert.ToDouble (Price);
@@ -26,7 +26,7 @@ namespace Controller {
                 Model,
                 ConvertYear,
                 ConvertPrice,
-                Restrictions
+                Color
             );
         }
 

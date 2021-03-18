@@ -5,7 +5,7 @@ using Repository;
 
 namespace Model {
     public class RentHeavyVehicle {
-        public string Id { set; get; }
+        public int Id { set; get; }
         public int RentId { set; get; }
         public Rent Rent { set; get; }
         public int HeavyVehicleId { set; get; }
@@ -15,6 +15,7 @@ namespace Model {
             Rent Rent,
             HeavyVehicle HeavyVehicle
         ) {
+            this.Id = Context.rentsHeavyVehicles.Count;
             this.Rent = Rent;
             this.RentId = Rent.Id;
             this.HeavyVehicle = HeavyVehicle;
