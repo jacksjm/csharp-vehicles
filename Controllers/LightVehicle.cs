@@ -8,7 +8,7 @@ namespace Controller {
             string Model,
             string Year,
             string Price,
-            string Restrictions
+            string Color
         ) {
             int ConvertYear = Convert.ToInt32 (Year);
             double ConvertPrice = Convert.ToDouble (Price);
@@ -26,16 +26,16 @@ namespace Controller {
                 Model,
                 ConvertYear,
                 ConvertPrice,
-                Restrictions
+                Color
             );
         }
 
-        public static List<Model.LightVehicle> GetLightVehicles () {
+        public static IEnumerable<Model.LightVehicle> GetLightVehicles () {
             return Model.LightVehicle.GetLightVehicles ();
         }
 
         public static Model.LightVehicle GetLightVehicle (int Id) {
-            int ListLenght = Model.LightVehicle.GetLightVehicles ().Count;
+            int ListLenght = Model.LightVehicle.GetCount();
 
             if (Id < 0 || ListLenght <= Id) {
                 throw new Exception ("Id informado é inválido.");

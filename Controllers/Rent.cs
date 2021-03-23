@@ -31,7 +31,7 @@ namespace Controller {
             return new Model.Rent (Customer, RentDate, LightVehicles, HeavyVehicles);
         }
 
-        public static List<Model.Rent> GetRents () {
+        public static IEnumerable<Model.Rent> GetRents () {
             return Model.Rent.GetRents ();
         }
     }

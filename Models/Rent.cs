@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Repository;
 
 namespace Model {
     public class Rent {
@@ -8,48 +10,36 @@ namespace Model {
         public Customer Customer { set; get; } // Cliente
         public DateTime RentDate { set; get; } // Data de Locação
 
-        public List<RentLightVehicle> LightVehicles { set; get; }
-        public List<RentHeavyVehicle> HeavyVehicles { set; get; }
-
-        public static readonly List<Rent> Rents = new ();
-
         public Rent (
             Customer Customer,
             DateTime RentDate,
             List<LightVehicle> LightVehicles,
             List<HeavyVehicle> HeavyVehicles
         ) {
+            this.Id = Context.rents.Count;
             this.Customer = Customer;
             this.CustomerId = Customer.Id;
             this.RentDate = RentDate;
-            this.LightVehicles = new ();
-            this.HeavyVehicles = new ();
-
-            Customer.Rents.Add(this);
             
             foreach (LightVehicle vehicle in LightVehicles) {
                 RentLightVehicle rentLightVehicle = new (this, vehicle);
-                this.LightVehicles.Add (rentLightVehicle);
             }
 
             foreach (HeavyVehicle vehicle in HeavyVehicles) {
                 RentHeavyVehicle rentHeavyVehicle = new (this, vehicle);
-                this.HeavyVehicles.Add (rentHeavyVehicle);
             }
 
-            Rents.Add (this);
+            Context.rents.Add (this);
         }
 
         public double GetRentValue() {
             double total = 0;
 
-            foreach (RentLightVehicle vehicle in LightVehicles) {
+            foreach (RentLightVehicle vehicle in RentLightVehicle.GetVehicles(this.Id)) {
                 total += vehicle.LightVehicle.Price;
             }
 
-            foreach (RentHeavyVehicle vehicle in HeavyVehicles) {
-                total += vehicle.HeavyVehicle.Price;
-            }
+            total += RentHeavyVehicle.GetTotal(this.Id);
             
             return total;
         }
@@ -71,8 +61,8 @@ namespace Model {
                 this.Customer
             );
             Print += "\nVeículos Leves Locados: ";
-            if (LightVehicles.Count > 0) {
-                foreach (RentLightVehicle vehicle in LightVehicles) {
+            if (RentLightVehicle.GetCount(this.Id) > 0) {
+                foreach (RentLightVehicle vehicle in RentLightVehicle.GetVehicles(this.Id)) {
                     Print += "\n    " + vehicle.LightVehicle;
                 }
             } else {
@@ -80,8 +70,8 @@ namespace Model {
             }
 
             Print += "\nVeículos Pesados Locados: ";
-            if (HeavyVehicles.Count > 0) {
-                foreach (RentHeavyVehicle vehicle in HeavyVehicles) {
+            if (RentHeavyVehicle.GetCount(this.Id) > 0) {
+                foreach (RentHeavyVehicle vehicle in RentHeavyVehicle.GetVehicles(this.Id)) {
                     Print += "\n    " + vehicle.HeavyVehicle;
                 }
             } else {
@@ -106,8 +96,12 @@ namespace Model {
             return HashCode.Combine (this.Id);
         }
 
-        public static List<Rent> GetRents () {
-            return Rents;
+        public static IEnumerable<Rent> GetRents () {
+            return from rent in Context.rents select rent;
+        }
+
+        public static int GetCount(int CustomerId) {
+            return (from rent in Context.rents where rent.CustomerId == CustomerId select rent).Count();
         }
 
     }

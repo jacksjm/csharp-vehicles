@@ -27,10 +27,8 @@ namespace View {
         /// <summary>
         /// Shows the customer's list
         /// </summary>
-        public static void ListCustomers () {
-            List<Model.Customer> customers = Controller.Customer.ListCustomers ();
-            
-            foreach (Model.Customer customer in customers) {
+        public static void ListCustomers () {            
+            foreach (Model.Customer customer in Controller.Customer.ListCustomers ()) {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (customer);
             }

@@ -19,9 +19,7 @@ namespace View {
         }
 
         public static void ListVehicles () {
-            List<Model.HeavyVehicle> heavyVehicles = Controller.HeavyVehicle.GetHeavyVehicles ();
-
-            foreach (Model.HeavyVehicle vehicle in heavyVehicles) {
+            foreach (Model.HeavyVehicle vehicle in Controller.HeavyVehicle.GetHeavyVehicles ()) {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (vehicle);
             }
