@@ -10,13 +10,17 @@ namespace Model {
         public Customer Customer { set; get; } // Cliente
         public DateTime RentDate { set; get; } // Data de Locação
 
+        public Rent() {
+            
+        }
         public Rent (
             Customer Customer,
             DateTime RentDate,
             List<LightVehicle> LightVehicles,
             List<HeavyVehicle> HeavyVehicles
         ) {
-            this.Id = Context.rents.Count;
+            Context db = new Context();
+            //this.Id = db.Rents.Count;
             this.Customer = Customer;
             this.CustomerId = Customer.Id;
             this.RentDate = RentDate;
@@ -29,7 +33,8 @@ namespace Model {
                 RentHeavyVehicle rentHeavyVehicle = new (this, vehicle);
             }
 
-            Context.rents.Add (this);
+            db.Rents.Add (this);
+            db.SaveChanges();
         }
 
         public double GetRentValue() {
@@ -97,11 +102,13 @@ namespace Model {
         }
 
         public static IEnumerable<Rent> GetRents () {
-            return from rent in Context.rents select rent;
+            Context db = new Context();
+            return from rent in db.Rents select rent;
         }
 
         public static int GetCount(int CustomerId) {
-            return (from rent in Context.rents where rent.CustomerId == CustomerId select rent).Count();
+            Context db = new Context();
+            return (from rent in db.Rents where rent.CustomerId == CustomerId select rent).Count();
         }
 
     }

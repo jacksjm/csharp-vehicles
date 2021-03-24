@@ -11,21 +11,27 @@ namespace Model {
         public int LightVehicleId { set; get; }
         public LightVehicle LightVehicle { set; get; }
 
+        public RentLightVehicle() {
+            
+        }
         public RentLightVehicle (
             Rent Rent,
             LightVehicle LightVehicle
         ) {
-            this.Id = Context.rentsLightVehicles.Count;
+            Context db = new Context();
+            //this.Id = db.RentsLightVehicles.Count;
             this.Rent = Rent;
             this.RentId = Rent.Id;
             this.LightVehicle = LightVehicle;
             this.LightVehicleId = LightVehicle.Id;
 
-            Context.rentsLightVehicles.Add(this);
+            db.RentsLightVehicles.Add(this);
+            db.SaveChanges();
         }
 
         public static IEnumerable<RentLightVehicle> GetVehicles(int RentId) {
-            return from vehicle in Context.rentsLightVehicles where vehicle.RentId == RentId select vehicle;
+            Context db = new Context();
+            return from vehicle in db.RentsLightVehicles where vehicle.RentId == RentId select vehicle;
         }
 
         public static int GetCount(int RentId) {

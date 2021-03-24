@@ -14,6 +14,9 @@ namespace Model {
         public string Identification { set; get; } // C.P.F.
         public int ReturnDays { set; get; } // Dias para Devolução
 
+        public Customer() {
+            
+        }
         /// <summary>
         /// Constructor to Customer object
         /// </summary>
@@ -27,13 +30,15 @@ namespace Model {
             string Identification,
             int ReturnDays
         ) {
-            this.Id = Context.customers.Count;
+            Context db = new Context();
+            //this.Id = db.Customers.Count;
             this.Name = Name;
             this.Birth = Birth;
             this.Identification = Identification;
             this.ReturnDays = ReturnDays;
 
-            Context.customers.Add (this);
+            db.Customers.Add (this);
+            db.SaveChanges();
         }
 
         /// <summary>
@@ -86,7 +91,8 @@ namespace Model {
         /// </summary>
         /// <returns>Returns the customer list collection</returns>
         public static IEnumerable<Customer> GetCustomers () {
-            return from customer in Context.customers select customer;
+            Context db = new Context();
+            return from customer in db.Customers select customer;
         }
 
         public static int GetCount () {
@@ -98,21 +104,23 @@ namespace Model {
         /// </summary>
         /// <param name="customer">The customer's object</param>
         public static void AddCustomer (Customer customer) {
-            Context.customers.Add (customer);
+            Context db = new Context();
+            db.Customers.Add (customer);
         }
 
         public static Customer GetCustomer(int Id) {
             // Context db = new Context();
 
             // SELECT * FROM customer;
-            // from customer in Context.customers select customer;
+            // from customer in Context.Customers select customer;
 
             // "SELECT * FROM customer WHERE id = '" + Id + "'";
-            IEnumerable<Customer> query = from customer in Context.customers where customer.Id == Id select customer;
+            Context db = new Context();
+            IEnumerable<Customer> query = from customer in db.Customers where customer.Id == Id select customer;
 
             return query.First();
             
-            // return Context.customers[Id];
+            // return Context.Customers[Id];
         }
     }
 }

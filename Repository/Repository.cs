@@ -1,16 +1,19 @@
-using System.Collections.Generic;
 using Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class Context 
+    public class Context : DbContext
     {
-        public static readonly List<Customer> customers = new ();
-        public static readonly List<HeavyVehicle> heavyVehicles = new ();
-        public static readonly List<LightVehicle> lightVehicles = new ();
-        public static readonly List<Rent> rents = new ();
-        public static readonly List<RentHeavyVehicle> rentsHeavyVehicles = new ();
-        public static readonly List<RentLightVehicle> rentsLightVehicles = new ();
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<HeavyVehicle> HeavyVehicles { get; set; }
+        public DbSet<LightVehicle> LightVehicles { get; set; }
+        public DbSet<Rent> Rents { get; set; }
+        public DbSet<RentHeavyVehicle> RentsHeavyVehicles { get; set; }
+        public DbSet<RentLightVehicle> RentsLightVehicles { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseMySql("Server=localhost;User Id=root;Database=vehiclerent");
 
     }
 }

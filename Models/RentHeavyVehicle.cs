@@ -11,26 +11,33 @@ namespace Model {
         public int HeavyVehicleId { set; get; }
         public HeavyVehicle HeavyVehicle { set; get; }
 
+        public RentHeavyVehicle() {
+            
+        }
         public RentHeavyVehicle (
             Rent Rent,
             HeavyVehicle HeavyVehicle
         ) {
-            this.Id = Context.rentsHeavyVehicles.Count;
+            Context db = new Context();
+            //this.Id = db.RentsHeavyVehicles.Count;
             this.Rent = Rent;
             this.RentId = Rent.Id;
             this.HeavyVehicle = HeavyVehicle;
             this.HeavyVehicleId = HeavyVehicle.Id;
 
-            Context.rentsHeavyVehicles.Add(this);
+            db.RentsHeavyVehicles.Add(this);
+            db.SaveChanges();
         }
 
         public static IEnumerable<RentHeavyVehicle> GetVehicles(int RentId) {
-            return from vehicle in Context.rentsHeavyVehicles where vehicle.RentId == RentId select vehicle;
+            Context db = new Context();
+            return from vehicle in db.RentsHeavyVehicles where vehicle.RentId == RentId select vehicle;
         }
 
         public static double GetTotal(int RentId) {
+            Context db = new Context();
             return (
-                from vehicle in Context.rentsHeavyVehicles 
+                from vehicle in db.RentsHeavyVehicles 
                 where vehicle.RentId == RentId 
                 select vehicle.HeavyVehicle.Price
             ).Sum();
