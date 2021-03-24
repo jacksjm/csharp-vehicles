@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Repository;
 
 namespace Model {
@@ -9,6 +10,7 @@ namespace Model {
     /// </summary>
     public class Customer {
         public int Id { set; get; } // Identificador Único (ID)
+        [Required]
         public string Name { set; get; } // Nome
         public DateTime Birth { set; get; } // Data de Nascimento
         public string Identification { set; get; } // C.P.F.
