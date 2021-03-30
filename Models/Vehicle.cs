@@ -7,6 +7,10 @@ namespace Model {
         public int Year { set; get; } // Ano
         public double Price { set; get; } // Valor para locação
 
+        protected Vehicle() {
+
+        }
+        
         protected Vehicle (
             string Brand,
             string Model,

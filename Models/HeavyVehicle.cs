@@ -8,6 +8,9 @@ namespace Model {
         public int Id { set; get; }
         public string Restrictions { set; get; }
 
+        public HeavyVehicle(): base() {
+
+        }
         public HeavyVehicle (
             string Brand,
             string Model,
@@ -15,10 +18,12 @@ namespace Model {
             double Price,
             string Restrictions
         ) : base (Brand, Model, Year, Price) {
-            this.Id = Context.heavyVehicles.Count;
+            Context db = new Context();
+            //this.Id = db.HeavyVehicles.Count;
             this.Restrictions = Restrictions;
 
-            Context.heavyVehicles.Add (this);
+            db.HeavyVehicles.Add (this);
+            db.SaveChanges();
         }
 
         public override string ToString () {
@@ -41,7 +46,8 @@ namespace Model {
         }
 
         public static IEnumerable<HeavyVehicle> GetHeavyVehicles () {
-            return from heavyVehicle in Context.heavyVehicles select heavyVehicle;
+            Context db = new Context();
+            return from heavyVehicle in db.HeavyVehicles select heavyVehicle;
         }
 
         public static int GetCount() {
@@ -49,8 +55,9 @@ namespace Model {
         }
 
         public static HeavyVehicle GetHeavyVehicle (int Id) {
+            Context db = new Context();
             return (
-                from heavyVehicle in Context.heavyVehicles 
+                from heavyVehicle in db.HeavyVehicles 
                 where heavyVehicle.Id == Id 
                 select heavyVehicle
             ).First();
