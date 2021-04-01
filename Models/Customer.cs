@@ -101,6 +101,10 @@ namespace Model {
             return GetCustomers().Count();
         }
 
+        public static Customer GetLast () {
+            return GetCustomers().Last();
+        }
+
         /// <summary>
         /// Inserts a new customer on Fake Database
         /// </summary>
@@ -123,6 +127,33 @@ namespace Model {
             return query.First();
             
             // return Context.Customers[Id];
+        }
+
+        public static Customer UpdateCustomer(
+            Customer customer,
+            int field,
+            string value
+        ) {
+            switch(field){
+                case 1:
+                    customer.Name = value;
+                    break;
+                case 2:
+                    customer.Identification = value;
+                    break;
+            }
+            Context db = new Context();
+            db.Customers.Update(customer);
+            db.SaveChanges();
+            return customer;
+        }
+
+        public static Customer DeleteCustomer(int id) {
+            Customer customer = GetCustomer(id);
+            Context db = new Context();
+            db.Customers.Remove(customer);
+            db.SaveChanges();
+            return customer;
         }
     }
 }

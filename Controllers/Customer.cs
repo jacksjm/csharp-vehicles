@@ -61,14 +61,46 @@ namespace Controller {
             return Model.Customer.GetCustomers ();
         }
 
-        public static Model.Customer GetCustomer (int Id) {
-            int ListLenght = Model.Customer.GetCount();
+        public static Model.Customer GetCustomer (string StringId) {
+            int Id = Convert.ToInt32(StringId);
+            Model.Customer LastCustomer = Model.Customer.GetLast();
 
-            if (Id < 0 || ListLenght <= Id) {
+            if (Id < 0 || LastCustomer.Id < Id) {
                 throw new Exception ("Id informado é inválido.");
             }
 
             return Model.Customer.GetCustomer (Id);
+        }
+
+        public static Model.Customer UpdateCustomer(
+            Model.Customer customer,
+            string opcao,
+            string value
+        ) {
+            int field = Convert.ToInt32(opcao);
+            switch(field) {
+                case 1:
+                    return Model.Customer.UpdateCustomer(customer, field, value);
+                case 2:
+                    // Checks if the Identification is in the pattern 999.999.999-99
+                    Regex rgx = new ("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
+                    if (!rgx.IsMatch (value)) {
+                        throw new Exception ("C.P.F. Inválido");
+                    }
+                    return Model.Customer.UpdateCustomer(customer, field, value);
+                default:
+                    throw new Exception("Operacao inválida");
+            }
+        }
+
+        public static void DeleteCustomer (string StringId) {
+            int Id = Convert.ToInt32(StringId);
+            try {
+                Model.Customer.DeleteCustomer (Id);
+            } catch {
+                Console.WriteLine("Exclusão não permitida ou ID Inválido");
+            }
+            
         }
     }
 }

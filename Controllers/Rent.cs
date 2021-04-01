@@ -11,7 +11,7 @@ namespace Controller {
             List<Model.HeavyVehicle> HeavyVehicles
         ) {
             Model.Customer Customer = Controller.Customer
-                .GetCustomer (Convert.ToInt32 (IdCustomer));
+                .GetCustomer (IdCustomer);
             // Regex rgxDate = new ("^\\d{2}\\/\\d{2}\\/\\d{4}$");
             // if (!rgxDate.IsMatch (StringRentDate)) {
             //     throw new Exception ("Data de Locação em formato inválido");
