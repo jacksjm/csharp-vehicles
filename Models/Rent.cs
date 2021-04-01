@@ -7,7 +7,7 @@ namespace Model {
     public class Rent {
         public int Id { set; get; } // Identificador Único (ID)
         public int CustomerId { set; get; } // Identificador Único do Cliente
-        public Customer Customer { set; get; } // Cliente
+        public virtual Customer Customer { set; get; } // Cliente
         public DateTime RentDate { set; get; } // Data de Locação
 
         public Rent() {
@@ -21,27 +21,29 @@ namespace Model {
         ) {
             Context db = new Context();
             //this.Id = db.Rents.Count;
-            this.Customer = Customer;
+            //this.Customer = Customer;
             this.CustomerId = Customer.Id;
             this.RentDate = RentDate;
-            
-            foreach (LightVehicle vehicle in LightVehicles) {
-                RentLightVehicle rentLightVehicle = new (this, vehicle);
-            }
-
-            foreach (HeavyVehicle vehicle in HeavyVehicles) {
-                RentHeavyVehicle rentHeavyVehicle = new (this, vehicle);
-            }
 
             db.Rents.Add (this);
             db.SaveChanges();
+
+            Rent rent = GetRents().Last();
+            foreach (LightVehicle vehicle in LightVehicles) {
+                RentLightVehicle rentLightVehicle = new (rent, vehicle);
+            }
+
+            foreach (HeavyVehicle vehicle in HeavyVehicles) {
+                RentHeavyVehicle rentHeavyVehicle = new (rent, vehicle);
+            }
         }
 
         public double GetRentValue() {
             double total = 0;
 
             foreach (RentLightVehicle vehicle in RentLightVehicle.GetVehicles(this.Id)) {
-                total += vehicle.LightVehicle.Price;
+                LightVehicle lightVehicle = LightVehicle.GetLightVehicle(vehicle.LightVehicleId);
+                total += lightVehicle.Price;
             }
 
             total += RentHeavyVehicle.GetTotal(this.Id);
@@ -50,7 +52,8 @@ namespace Model {
         }
 
         public DateTime GetReturnDate() {
-            int ReturnDays = this.Customer.ReturnDays;
+            Customer customer = Customer.GetCustomer(this.CustomerId);
+            int ReturnDays = customer.ReturnDays;
 
             return this.RentDate.AddDays(ReturnDays);
         }
@@ -68,7 +71,8 @@ namespace Model {
             Print += "\nVeículos Leves Locados: ";
             if (RentLightVehicle.GetCount(this.Id) > 0) {
                 foreach (RentLightVehicle vehicle in RentLightVehicle.GetVehicles(this.Id)) {
-                    Print += "\n    " + vehicle.LightVehicle;
+                    LightVehicle lightVehicle = LightVehicle.GetLightVehicle(vehicle.LightVehicleId);
+                    Print += "\n    " + lightVehicle;
                 }
             } else {
                 Print += "\n    Nada Consta";
@@ -77,7 +81,8 @@ namespace Model {
             Print += "\nVeículos Pesados Locados: ";
             if (RentHeavyVehicle.GetCount(this.Id) > 0) {
                 foreach (RentHeavyVehicle vehicle in RentHeavyVehicle.GetVehicles(this.Id)) {
-                    Print += "\n    " + vehicle.HeavyVehicle;
+                    HeavyVehicle heavyVehicle = HeavyVehicle.GetHeavyVehicle(vehicle.HeavyVehicleId);
+                    Print += "\n    " + heavyVehicle;
                 }
             } else {
                 Print += "\n    Nada Consta";
