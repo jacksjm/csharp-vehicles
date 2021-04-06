@@ -7,9 +7,9 @@ namespace Model {
     public class RentHeavyVehicle {
         public int Id { set; get; }
         public int RentId { set; get; }
-        public Rent Rent { set; get; }
+        public virtual Rent Rent { set; get; }
         public int HeavyVehicleId { set; get; }
-        public HeavyVehicle HeavyVehicle { set; get; }
+        public virtual HeavyVehicle HeavyVehicle { set; get; }
 
         public RentHeavyVehicle() {
             
@@ -20,9 +20,9 @@ namespace Model {
         ) {
             Context db = new Context();
             //this.Id = db.RentsHeavyVehicles.Count;
-            this.Rent = Rent;
+            //this.Rent = Rent;
             this.RentId = Rent.Id;
-            this.HeavyVehicle = HeavyVehicle;
+            //this.HeavyVehicle = HeavyVehicle;
             this.HeavyVehicleId = HeavyVehicle.Id;
 
             db.RentsHeavyVehicles.Add(this);

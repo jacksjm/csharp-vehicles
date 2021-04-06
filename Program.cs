@@ -11,19 +11,21 @@ namespace csharp_vehicles {
             Console.WriteLine ("======= Bem vindo a nossa revenda =======");
             // Always repeat until the user leaves
             do {
-                Console.WriteLine ("+-------------------------------+");
-                Console.WriteLine ("| Digite a operação de Menu     |");
-                Console.WriteLine ("| 1 - Cadastrar Cliente         |");
-                Console.WriteLine ("| 2 - Lista de Clientes         |");
-                Console.WriteLine ("| 3 - Cadastrar Veículo Pesado  |");
-                Console.WriteLine ("| 4 - Lista de Veículos Pesados |");
-                Console.WriteLine ("| 5 - Cadastrar Veículo Leve    |");
-                Console.WriteLine ("| 6 - Lista de Veículos Leves   |");
-                Console.WriteLine ("| 7 - Cadastrar Locação         |");
-                Console.WriteLine ("| 8 - Lista de Locações         |");
-                Console.WriteLine ("| 9 - Importar Informações      |");
-                Console.WriteLine ("| 0 - Sair                      |");
-                Console.WriteLine ("+-------------------------------+");
+                Console.WriteLine ("+--------------------------------+");
+                Console.WriteLine ("| Digite a operação de Menu      |");
+                Console.WriteLine ("| 1  - Cadastrar Cliente         |");
+                Console.WriteLine ("| 2  - Lista de Clientes         |");
+                Console.WriteLine ("| 3  - Alterar Cliente           |");
+                Console.WriteLine ("| 4  - Excluir Cliente           |");
+                Console.WriteLine ("| 5  - Cadastrar Veículo Pesado  |");
+                Console.WriteLine ("| 6  - Lista de Veículos Pesados |");
+                Console.WriteLine ("| 7  - Cadastrar Veículo Leve    |");
+                Console.WriteLine ("| 8  - Lista de Veículos Leves   |");
+                Console.WriteLine ("| 9  - Cadastrar Locação         |");
+                Console.WriteLine ("| 10 - Lista de Locações         |");
+                Console.WriteLine ("| 11 - Importar Informações      |");
+                Console.WriteLine ("| 0  - Sair                      |");
+                Console.WriteLine ("+--------------------------------+");
                 // Get the user option
                 opt = Convert.ToInt32 (Console.ReadLine ());
                 switch (opt) {
@@ -38,24 +40,30 @@ namespace csharp_vehicles {
                         View.Customer.ListCustomers ();
                         break;
                     case 3:
-                        View.HeavyVehicle.CreateVehicle ();
+                        View.Customer.UpdateCustomer ();
                         break;
                     case 4:
-                        View.HeavyVehicle.ListVehicles ();
+                        View.Customer.DeleteCustomer ();
                         break;
                     case 5:
-                        View.LightVehicle.CreateVehicle ();
+                        View.HeavyVehicle.CreateVehicle ();
                         break;
                     case 6:
-                        View.LightVehicle.ListVehicles ();
+                        View.HeavyVehicle.ListVehicles ();
                         break;
                     case 7:
-                        View.Rent.CreateRent ();
+                        View.LightVehicle.CreateVehicle ();
                         break;
                     case 8:
-                        View.Rent.ListRents ();
+                        View.LightVehicle.ListVehicles ();
                         break;
                     case 9:
+                        View.Rent.CreateRent ();
+                        break;
+                    case 10:
+                        View.Rent.ListRents ();
+                        break;
+                    case 11:
                         View.Import.DBImport ();
                         break;
                     default:

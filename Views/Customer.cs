@@ -24,6 +24,40 @@ namespace View {
                 Console.WriteLine ($"Informações digitadas são incorretas: {e.Message}");
             }
         }
+
+        public static void UpdateCustomer() {
+            Model.Customer customer;
+            try {
+                Console.WriteLine ("Informe o ID do Cliente: ");
+                string Id = Console.ReadLine();
+                customer = Controller.Customer.GetCustomer(Id);
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return;
+            }
+            Console.WriteLine ("Informe o Campo para Alteração: (1-Nome;2-C.P.F.)");
+            string field = Console.ReadLine();
+
+            Console.WriteLine ("Informe o Valor para Alteração:");
+            string value = Console.ReadLine();
+
+            try {
+                Controller.Customer.UpdateCustomer(customer,field,value);
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+
+        public static void DeleteCustomer() {
+            try {
+                Console.WriteLine ("Informe o ID do Cliente: ");
+                string Id = Console.ReadLine();
+                Controller.Customer.DeleteCustomer(Id);
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+        }
         /// <summary>
         /// Shows the customer's list
         /// </summary>
