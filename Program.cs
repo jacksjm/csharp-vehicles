@@ -1,4 +1,8 @@
 using System;
+using System.Drawing;
+// using System.Windows.Forms;
+using View;
+//using View.Libs;
 
 namespace csharp_vehicles {
     public class Program {
@@ -6,6 +10,10 @@ namespace csharp_vehicles {
         /// Start the system
         /// </summary>
         /// <param name="args"></param>
+        // public static void Main () {
+        //     Application.EnableVisualStyles ();
+        //     Application.Run (new Menu ());
+        // }
         public static void Main () {
             int opt;
             Console.WriteLine ("======= Bem vindo a nossa revenda =======");
@@ -72,6 +80,35 @@ namespace csharp_vehicles {
                 }
             } while (opt != 0);
         }
-
     }
+    
+    /*public class Menu : Form {
+        LibButton btnCreateCustomer;
+        Button btnListCustomer;
+        public Menu () {
+            btnCreateCustomer = new LibButton (
+                "Cadastrar Cliente", 
+                new Size (120, 30), 
+                new Point (100, 60),
+                new EventHandler (this.btnCreateCustomerClick)
+            );
+
+            btnListCustomer = new Button ();
+            btnListCustomer.BackColor = Color.Red;
+            btnListCustomer.Text = "Listar Cliente";
+            btnListCustomer.Size = new Size (120, 30);
+            btnListCustomer.Location = new Point (100, 100);
+            btnListCustomer.Click += new EventHandler (this.btnCreateCustomerClick);
+
+            this.Controls.Add (btnCreateCustomer);
+            this.Controls.Add (btnListCustomer);
+            this.Size = new Size (320, 150);
+        }
+
+        private void btnCreateCustomerClick (object sender, EventArgs e) {
+            CustomerCreate customerCreate = new CustomerCreate ();
+            customerCreate.Show ();
+        }
+
+    }*/
 }

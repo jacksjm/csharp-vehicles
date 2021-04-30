@@ -7,8 +7,8 @@ namespace View {
             int opt;
             int optLight;
             int optHeavy;
-            List<Model.LightVehicle> LightVehicles = new ();
-            List<Model.HeavyVehicle> HeavyVehicles = new ();
+            List<Model.LightVehicle> LightVehicles = new List<Model.LightVehicle>();
+            List<Model.HeavyVehicle> HeavyVehicles = new List<Model.HeavyVehicle>();
             Console.WriteLine ("Informe o Id do Cliente: ");
             string IdCustomer = Console.ReadLine ();
             Console.WriteLine ("Informe a Data da Locação: ");

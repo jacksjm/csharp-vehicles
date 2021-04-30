@@ -23,7 +23,7 @@ namespace Controller {
             string ReturnDays
         ) {
             // Checks if the Identification is in the pattern 999.999.999-99
-            Regex rgx = new ("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
+            Regex rgx = new Regex("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
             if (!rgx.IsMatch (Identification)) {
                 throw new Exception ("C.P.F. Inválido");
             }
@@ -83,7 +83,7 @@ namespace Controller {
                     return Model.Customer.UpdateCustomer(customer, field, value);
                 case 2:
                     // Checks if the Identification is in the pattern 999.999.999-99
-                    Regex rgx = new ("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
+                    Regex rgx = new Regex("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
                     if (!rgx.IsMatch (value)) {
                         throw new Exception ("C.P.F. Inválido");
                     }

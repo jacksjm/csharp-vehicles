@@ -19,7 +19,7 @@ namespace Model {
             string Color
         ) : base (Brand, Model, Year, Price) {
             Context db = new Context();
-            //this.Id = db.LightVehicles.Count;
+            this.Id = db.LightVehicles.Count;
             this.Color = Color;
 
             db.LightVehicles.Add (this);

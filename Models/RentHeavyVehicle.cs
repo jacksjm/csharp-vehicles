@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Repository;
+using System.Text.Json.Serialization;
 
 namespace Model {
     public class RentHeavyVehicle {
         public int Id { set; get; }
         public int RentId { set; get; }
-        public virtual Rent Rent { set; get; }
+        [JsonIgnore]
+        public Rent Rent { set; get; }
         public int HeavyVehicleId { set; get; }
-        public virtual HeavyVehicle HeavyVehicle { set; get; }
+        [JsonIgnore]
+        public HeavyVehicle HeavyVehicle { set; get; }
 
         public RentHeavyVehicle() {
             
@@ -19,8 +22,8 @@ namespace Model {
             HeavyVehicle HeavyVehicle
         ) {
             Context db = new Context();
-            //this.Id = db.RentsHeavyVehicles.Count;
-            //this.Rent = Rent;
+            this.Id = db.RentsHeavyVehicles.Count;
+            this.Rent = Rent;
             this.RentId = Rent.Id;
             //this.HeavyVehicle = HeavyVehicle;
             this.HeavyVehicleId = HeavyVehicle.Id;
@@ -35,12 +38,21 @@ namespace Model {
         }
 
         public static double GetTotal(int RentId) {
+            double total = 0;
             Context db = new Context();
-            return (
+            IEnumerable<RentHeavyVehicle> vehicles = (
                 from vehicle in db.RentsHeavyVehicles 
                 where vehicle.RentId == RentId 
-                select vehicle.HeavyVehicle.Price
-            ).Sum();
+                select vehicle
+            );
+
+            foreach (RentHeavyVehicle item in vehicles)
+            {
+                HeavyVehicle vehicle = HeavyVehicle.GetHeavyVehicle(item.HeavyVehicleId);
+                total += vehicle.Price;
+            }
+
+            return total;
         }
 
         public static int GetCount(int RentId) {

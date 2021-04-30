@@ -19,7 +19,7 @@ namespace Model {
             string Restrictions
         ) : base (Brand, Model, Year, Price) {
             Context db = new Context();
-            //this.Id = db.HeavyVehicles.Count;
+            this.Id = db.HeavyVehicles.Count;
             this.Restrictions = Restrictions;
 
             db.HeavyVehicles.Add (this);
