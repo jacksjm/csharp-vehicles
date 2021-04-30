@@ -3,17 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Fake;
 
 namespace Repository
 {
     public class Context
     {
-        public HashSet<Customer> Customers { get; set; }
-        public HashSet<HeavyVehicle> HeavyVehicles { get; set; }
-        public HashSet<LightVehicle> LightVehicles { get; set; }
-        public HashSet<Rent> Rents { get; set; }
-        public HashSet<RentHeavyVehicle> RentsHeavyVehicles { get; set; }
-        public HashSet<RentLightVehicle> RentsLightVehicles { get; set; }
+        public DBFake<Customer> Customers { get; set; }
+        public DBFake<HeavyVehicle> HeavyVehicles { get; set; }
+        public DBFake<LightVehicle> LightVehicles { get; set; }
+        public DBFake<Rent> Rents { get; set; }
+        public DBFake<RentHeavyVehicle> RentsHeavyVehicles { get; set; }
+        public DBFake<RentLightVehicle> RentsLightVehicles { get; set; }
 
         public void SaveChanges() {
             string jsonCustomers = JsonSerializer.Serialize(this.Customers);
@@ -36,12 +37,12 @@ namespace Repository
         }
 
         public Context() {
-            this.Customers = new HashSet<Customer>();
-            this.HeavyVehicles = new HashSet<HeavyVehicle>();
-            this.LightVehicles = new HashSet<LightVehicle>();
-            this.Rents = new HashSet<Rent>();
-            this.RentsHeavyVehicles = new HashSet<RentHeavyVehicle>();
-            this.RentsLightVehicles = new HashSet<RentLightVehicle>();
+            this.Customers = new DBFake<Customer>();
+            this.HeavyVehicles = new DBFake<HeavyVehicle>();
+            this.LightVehicles = new DBFake<LightVehicle>();
+            this.Rents = new DBFake<Rent>();
+            this.RentsHeavyVehicles = new DBFake<RentHeavyVehicle>();
+            this.RentsLightVehicles = new DBFake<RentLightVehicle>();
 
             JsonElement.ArrayEnumerator customers = readJson(@"./Repository/json/customers.json");
             while (customers.MoveNext()) {
