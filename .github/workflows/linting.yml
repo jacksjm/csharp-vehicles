@@ -1,0 +1,12 @@
+name: .NET Core - Linting
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: EditorConfig lint
+      uses: greut/eclint-action@v0.1.1
