@@ -20,7 +20,7 @@ namespace Controller {
             string Name,
             string StringBirth,
             string Identification,
-            string ReturnDays
+            decimal ReturnDays
         ) {
             // Checks if the Identification is in the pattern 999.999.999-99
             Regex rgx = new Regex("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
@@ -61,6 +61,10 @@ namespace Controller {
             return Model.Customer.GetCustomers ();
         }
 
+        public static List<Model.Customer> ArrayCustomers () {
+            return Model.Customer.ArrayCustomers ();
+        }
+
         public static Model.Customer GetCustomer (string StringId) {
             int Id = Convert.ToInt32(StringId);
             Model.Customer LastCustomer = Model.Customer.GetLast();
@@ -98,7 +102,7 @@ namespace Controller {
             try {
                 Model.Customer.DeleteCustomer (Id);
             } catch {
-                Console.WriteLine("Exclusão não permitida ou ID Inválido");
+                throw new Exception("Exclusão não permitida ou ID Inválido");
             }
             
         }

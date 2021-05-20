@@ -18,12 +18,10 @@ namespace Model {
             double Price,
             string Color
         ) : base (Brand, Model, Year, Price) {
-            Context db = new Context();
-            this.Id = db.LightVehicles.Count;
+            this.Id = Context.LightVehicles.Count;
             this.Color = Color;
 
-            db.LightVehicles.Add (this);
-            db.SaveChanges();
+            Context.LightVehicles.Add (this);
         }
 
         public override string ToString () {
@@ -46,8 +44,7 @@ namespace Model {
         }
 
         public static IEnumerable<LightVehicle> GetLightVehicles () {
-            Context db = new Context();
-            return from lightVehicle in db.LightVehicles select lightVehicle;
+            return from lightVehicle in Context.LightVehicles select lightVehicle;
         }
 
         public static int GetCount() {
@@ -55,9 +52,8 @@ namespace Model {
         }
         
         public static LightVehicle GetLightVehicle (int Id) {
-            Context db = new Context();
             return (
-                from lightVehicle in db.LightVehicles
+                from lightVehicle in Context.LightVehicles
                 where lightVehicle.Id == Id
                 select lightVehicle
             ).First();

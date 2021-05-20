@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace View {
+namespace Views {
     public class Rent {
         public static void CreateRent () {
             int opt;

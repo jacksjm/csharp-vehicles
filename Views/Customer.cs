@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace View {
+namespace Views {
     /// <summary>
     /// Represents the Customer View
     /// </summary>

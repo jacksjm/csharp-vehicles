@@ -30,15 +30,15 @@ namespace Model {
             string Identification,
             int ReturnDays
         ) {
-            Context db = new Context();
-            this.Id = db.Customers.Count;
+        
+            this.Id = Context.Customers.Count;
             this.Name = Name;
             this.Birth = Birth;
             this.Identification = Identification;
             this.ReturnDays = ReturnDays;
 
-            db.Customers.Add (this);
-            db.SaveChanges();
+            Context.Customers.Add (this);
+        
         }
 
         /// <summary>
@@ -91,8 +91,11 @@ namespace Model {
         /// </summary>
         /// <returns>Returns the customer list collection</returns>
         public static IEnumerable<Customer> GetCustomers () {
-            Context db = new Context();
-            return from customer in db.Customers select customer;
+            return from customer in Context.Customers select customer;
+        }
+
+        public static List<Customer> ArrayCustomers () {
+            return (from customer in Context.Customers select customer).ToList();
         }
 
         public static int GetCount () {
@@ -108,19 +111,17 @@ namespace Model {
         /// </summary>
         /// <param name="customer">The customer's object</param>
         public static void AddCustomer (Customer customer) {
-            Context db = new Context();
-            db.Customers.Add (customer);
+            Context.Customers.Add (customer);
         }
 
         public static Customer GetCustomer(int Id) {
-            // Context db = new Context();
+        
 
             // SELECT * FROM customer;
             // from customer in Context.Customers select customer;
 
             // "SELECT * FROM customer WHERE id = '" + Id + "'";
-            Context db = new Context();
-            IEnumerable<Customer> query = from customer in db.Customers where customer.Id == Id select customer;
+            IEnumerable<Customer> query = from customer in Context.Customers where customer.Id == Id select customer;
 
             return query.First();
             
@@ -140,17 +141,13 @@ namespace Model {
                     customer.Identification = value;
                     break;
             }
-            Context db = new Context();
-            db.Customers.Update(customer);
-            db.SaveChanges();
+            Context.Customers.Update(customer);
             return customer;
         }
 
         public static Customer DeleteCustomer(int id) {
             Customer customer = GetCustomer(id);
-            Context db = new Context();
-            db.Customers.Remove(customer);
-            db.SaveChanges();
+            Context.Customers.Remove(customer);
             return customer;
         }
     }

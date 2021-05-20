@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace View {
+namespace Views {
     public class HeavyVehicle {
         public static void CreateVehicle () {
             Console.WriteLine ("Informe a Marca do Veículo: ");

@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Repository;
-using System.Text.Json.Serialization;
 
 namespace Model {
     public class Rent {
         public int Id { set; get; } // Identificador Único (ID)
         public int CustomerId { set; get; } // Identificador Único do Cliente
-        [JsonIgnore]
         public Customer Customer { set; get; } // Cliente
         public DateTime RentDate { set; get; } // Data de Locação
 
@@ -21,21 +19,19 @@ namespace Model {
             List<LightVehicle> LightVehicles,
             List<HeavyVehicle> HeavyVehicles
         ) {
-            Context db = new Context();
-            this.Id = db.Rents.Count;
+            this.Id = Context.Rents.Count;
             this.Customer = Customer;
             this.CustomerId = Customer.Id;
             this.RentDate = RentDate;
             
-            db.Rents.Add (this);
-            db.SaveChanges();
+            Context.Rents.Add (this);
 
             foreach (LightVehicle vehicle in LightVehicles) {
-                RentLightVehicle rentLightVehicle = new RentLightVehicle(this, vehicle);
+                new RentLightVehicle(this, vehicle);
             }
 
             foreach (HeavyVehicle vehicle in HeavyVehicles) {
-                RentHeavyVehicle rentHeavyVehicle = new RentHeavyVehicle(this, vehicle);
+                new RentHeavyVehicle(this, vehicle);
             }
         }
 
@@ -102,13 +98,11 @@ namespace Model {
         }
 
         public static IEnumerable<Rent> GetRents () {
-            Context db = new Context();
-            return from rent in db.Rents select rent;
+            return from rent in Context.Rents select rent;
         }
 
         public static int GetCount(int CustomerId) {
-            Context db = new Context();
-            return (from rent in db.Rents where rent.CustomerId == CustomerId select rent).Count();
+            return (from rent in Context.Rents where rent.CustomerId == CustomerId select rent).Count();
         }
 
     }
