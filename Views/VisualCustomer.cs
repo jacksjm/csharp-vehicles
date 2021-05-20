@@ -153,7 +153,8 @@ namespace Views {
         }
 
         private void helpLink(object sender, LinkLabelLinkClickedEventArgs e){
-			this.lblCPF.LinkVisited = true;		}
+			this.lblCPF.LinkVisited = true;
+        }
 
         private void loadForm(object sender, EventArgs e) {
             this.txtNome.Text = this.customer.Name;
@@ -168,7 +169,8 @@ namespace Views {
         private LibButton btnCancelar;
 
         public CustomerList() {
-            List<Model.Customer> customers = Controller.Customer.ArrayCustomers();
+            List<Model.Customer> customers = Controller.Customer
+                .ArrayCustomers();
             LibColumn[] columns = new LibColumn[] {
                 new LibColumn("Id", HorizontalAlignment.Left),
                 new LibColumn("Nome", HorizontalAlignment.Left),
@@ -186,7 +188,13 @@ namespace Views {
                 item.SubItems.Add(customer.ReturnDays.ToString());
                 listView.Items.Add(item);
             }			
-            btnCancelar = new LibButton ("Cancelar", 180, 380, 100, Click: this.btnCancelarClick);
+            btnCancelar = new LibButton (
+                "Cancelar",
+                180,
+                380,
+                100,
+                Click: this.btnCancelarClick
+            );
 
             this.Size = new Size (450, 450);
             this.Controls.Add (listView);

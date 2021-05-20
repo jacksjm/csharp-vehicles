@@ -25,7 +25,8 @@ namespace Model {
         }
 
         public override string ToString () {
-            return "Id: " + this.Id + " - " + base.ToString () + " - Restrições: " + this.Restrictions;
+            return "Id: " + this.Id + " - " + base.ToString ()
+                + " - Restrições: " + this.Restrictions;
         }
 
         public override bool Equals (object obj) {
@@ -44,7 +45,8 @@ namespace Model {
         }
 
         public static IEnumerable<HeavyVehicle> GetHeavyVehicles () {
-            return from heavyVehicle in Context.HeavyVehicles select heavyVehicle;
+            return from heavyVehicle in Context
+                .HeavyVehicles select heavyVehicle;
         }
 
         public static int GetCount() {
