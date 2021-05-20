@@ -1,11 +1,11 @@
 using System;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using Views.Libs;
 using System.Diagnostics;
-using System.Threading;
+using System.Drawing;
 using System.IO;
+using System.Threading;
+using System.Windows.Forms;
+using Views.Libs;
 
 namespace Views {
     public class CustomerCreate : LibForm {
@@ -29,19 +29,19 @@ namespace Views {
 
         public CustomerCreate (string id = "") {
             this.Text = "Cadastro de Cliente";
-            if (!id.Trim().Equals("")) {
+            if (!id.Trim ().Equals ("")) {
                 try {
-                    this.customer = Controller.Customer.GetCustomer(id);
+                    this.customer = Controller.Customer.GetCustomer (id);
                 } catch (Exception error) {
                     throw error;
                 }
-                
-                this.Load += new EventHandler(this.loadForm);
+
+                this.Load += new EventHandler (this.loadForm);
             }
-            
+
             lblNome = new LibLabel ("Nome", 20, 20, 40, 20);
             txtNome = new LibTextBox (180, 20);
-            
+
             lblDtNasc = new LibLabel ("Dt. Nasc.", 20, 80, 60, 20);
             txtDtNasc = new LibTextBox (180, 80);
 
@@ -49,7 +49,7 @@ namespace Views {
             lblCPF.Text = "C.P.F.";
             lblCPF.Location = new Point (20, 140);
             lblCPF.Size = new Size (60, 40);
-            lblCPF.LinkClicked += new LinkLabelLinkClickedEventHandler(
+            lblCPF.LinkClicked += new LinkLabelLinkClickedEventHandler (
                 this.helpLink
             );
 
@@ -97,14 +97,14 @@ namespace Views {
                 60,
                 380,
                 100,
-                Click: this.btnConfirmarClick
+                Click : this.btnConfirmarClick
             );
             btnConfirmar = new LibButton (
                 "Confirmar",
                 180,
                 380,
                 100,
-                Click: this.btnConfirmarClick
+                Click : this.btnConfirmarClick
             );
 
             this.Size = new Size (350, 450);
@@ -133,32 +133,32 @@ namespace Views {
 
             if (resultado == DialogResult.Yes) {
                 try {
-                    Controller.Customer.CreateCustomer(
+                    Controller.Customer.CreateCustomer (
                         this.txtNome.Text,
                         this.txtDtNasc.Text,
                         this.txtCPF.Text,
                         this.nmDiasDev.Value
                     );
                 } catch (Exception error) {
-                    MessageBox.Show(
+                    MessageBox.Show (
                         error.Message,
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
                 }
-                
+
             }
             this.Close ();
         }
 
-        private void helpLink(object sender, LinkLabelLinkClickedEventArgs e){
-			this.lblCPF.LinkVisited = true;
+        private void helpLink (object sender, LinkLabelLinkClickedEventArgs e) {
+            this.lblCPF.LinkVisited = true;
         }
 
-        private void loadForm(object sender, EventArgs e) {
+        private void loadForm (object sender, EventArgs e) {
             this.txtNome.Text = this.customer.Name;
-            this.txtDtNasc.Text = this.customer.Birth.ToString();
+            this.txtDtNasc.Text = this.customer.Birth.ToString ();
             this.txtCPF.Text = this.customer.Identification;
             this.nmDiasDev.Value = this.customer.ReturnDays;
         }
@@ -168,32 +168,31 @@ namespace Views {
         private LibListView listView;
         private LibButton btnCancelar;
 
-        public CustomerList() {
+        public CustomerList () {
             List<Model.Customer> customers = Controller.Customer
-                .ArrayCustomers();
+                .ArrayCustomers ();
             LibColumn[] columns = new LibColumn[] {
-                new LibColumn("Id", HorizontalAlignment.Left),
-                new LibColumn("Nome", HorizontalAlignment.Left),
-                new LibColumn("Dt. Nasc.", HorizontalAlignment.Left),
-                new LibColumn("C.P.F.", HorizontalAlignment.Left),
-                new LibColumn("Dias Dev.", HorizontalAlignment.Left)
+                new LibColumn ("Id", HorizontalAlignment.Left),
+                new LibColumn ("Nome", HorizontalAlignment.Left),
+                new LibColumn ("Dt. Nasc.", HorizontalAlignment.Left),
+                new LibColumn ("C.P.F.", HorizontalAlignment.Left),
+                new LibColumn ("Dias Dev.", HorizontalAlignment.Left)
             };
-            listView = new LibListView(25, 25, 400, 350, columns);
-            foreach (Model.Customer customer in customers)
-            {
-                ListViewItem item = new ListViewItem(customer.Id.ToString());
-                item.SubItems.Add(customer.Name);
-                item.SubItems.Add(String.Format("{0:d}",customer.Birth));
-                item.SubItems.Add(customer.Identification);
-                item.SubItems.Add(customer.ReturnDays.ToString());
-                listView.Items.Add(item);
-            }			
+            listView = new LibListView (25, 25, 400, 350, columns);
+            foreach (Model.Customer customer in customers) {
+                ListViewItem item = new ListViewItem (customer.Id.ToString ());
+                item.SubItems.Add (customer.Name);
+                item.SubItems.Add (String.Format ("{0:d}", customer.Birth));
+                item.SubItems.Add (customer.Identification);
+                item.SubItems.Add (customer.ReturnDays.ToString ());
+                listView.Items.Add (item);
+            }
             btnCancelar = new LibButton (
                 "Cancelar",
                 180,
                 380,
                 100,
-                Click: this.btnCancelarClick
+                Click : this.btnCancelarClick
             );
 
             this.Size = new Size (450, 450);
@@ -206,4 +205,3 @@ namespace Views {
         }
     }
 }
-
