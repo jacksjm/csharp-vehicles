@@ -5,7 +5,11 @@ using System;
 namespace Views {
     namespace Libs {
         public class InputBox {
-            public InputBox (string title, string promptText, ref string value) {
+            public InputBox (
+                string title,
+                string promptText,
+                ref string value
+            ) {
                 Form form = new Form ();
                 Label label = new Label ();
                 TextBox textBox = new TextBox ();
@@ -32,8 +36,13 @@ namespace Views {
                 buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 
                 form.ClientSize = new Size (396, 107);
-                form.Controls.AddRange (new Control[] { label, textBox, buttonOk, buttonCancel });
-                form.ClientSize = new Size (Math.Max (300, label.Right + 10), form.ClientSize.Height);
+                form.Controls.AddRange (
+                    new Control[] { label, textBox, buttonOk, buttonCancel }
+                );
+                form.ClientSize = new Size (
+                    Math.Max (300, label.Right + 10), 
+                    form.ClientSize.Height
+                );
                 form.FormBorderStyle = FormBorderStyle.FixedDialog;
                 form.StartPosition = FormStartPosition.CenterScreen;
                 form.MinimizeBox = false;

@@ -25,10 +25,17 @@ namespace Controller {
             }
 
             if (RentDate > DateTime.Now) {
-                throw new Exception ("Data de Locação não pode ser maior que a data atual");
+                throw new Exception (
+                    "Data de Locação não pode ser maior que a data atual"
+                );
             }
 
-            return new Model.Rent (Customer, RentDate, LightVehicles, HeavyVehicles);
+            return new Model.Rent (
+                Customer,
+                RentDate,
+                LightVehicles,
+                HeavyVehicles
+            );
         }
 
         public static IEnumerable<Model.Rent> GetRents () {

@@ -53,7 +53,8 @@ namespace Model {
             // Data da Locação: 04/03/2021
             // Id: 0 - Nome: João
             string Print = String.Format (
-                "Data da Locação: {0:d} - Data da Devolução: {1:d} - Valor: {2:C}\nCliente: {3}",
+                "Data da Locação: {0:d} - Data da Devolução: "
+                    + "{1:d} - Valor: {2:C}\nCliente: {3}",
                 this.RentDate,
                 this.GetReturnDate(),
                 this.GetRentValue(),
@@ -61,8 +62,11 @@ namespace Model {
             );
             Print += "\nVeículos Leves Locados: ";
             if (RentLightVehicle.GetCount(this.Id) > 0) {
-                foreach (RentLightVehicle item in RentLightVehicle.GetVehicles(this.Id)) {
-                    LightVehicle vehicle = LightVehicle.GetLightVehicle(item.LightVehicleId);
+                foreach (RentLightVehicle item in RentLightVehicle
+                    .GetVehicles(this.Id)) 
+                {
+                    LightVehicle vehicle = LightVehicle
+                        .GetLightVehicle(item.LightVehicleId);
                     Print += "\n    " + vehicle;
                 }
             } else {
@@ -71,8 +75,11 @@ namespace Model {
 
             Print += "\nVeículos Pesados Locados: ";
             if (RentHeavyVehicle.GetCount(this.Id) > 0) {
-                foreach (RentHeavyVehicle item in RentHeavyVehicle.GetVehicles(this.Id)) {
-                    HeavyVehicle vehicle = HeavyVehicle.GetHeavyVehicle(item.HeavyVehicleId);
+                foreach (RentHeavyVehicle item in RentHeavyVehicle
+                    .GetVehicles(this.Id)) 
+                {
+                    HeavyVehicle vehicle = HeavyVehicle
+                        .GetHeavyVehicle(item.HeavyVehicleId);
                     Print += "\n    " + vehicle;
                 }
             } else {
@@ -102,7 +109,8 @@ namespace Model {
         }
 
         public static int GetCount(int CustomerId) {
-            return (from rent in Context.Rents where rent.CustomerId == CustomerId select rent).Count();
+            return (from rent in Context.Rents where rent
+                .CustomerId == CustomerId select rent).Count();
         }
 
     }

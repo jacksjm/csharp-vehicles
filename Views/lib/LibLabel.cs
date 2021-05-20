@@ -30,7 +30,6 @@ namespace Views {
                 this.Size = new Size(width, height);
                 this.Location = new Point(x, y);
                 this.ForeColor = Color.Blue;
-                //this.Font =  new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold);
             }
         }
     }

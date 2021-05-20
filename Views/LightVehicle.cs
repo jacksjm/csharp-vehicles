@@ -15,11 +15,14 @@ namespace Views {
             Console.WriteLine ("Informe a Cor do Veículo: ");
             string Color = Console.ReadLine ();
 
-            Controller.LightVehicle.CreateLightVehicle (Brand, Model, Year, Price, Color);
+            Controller.LightVehicle
+                .CreateLightVehicle (Brand, Model, Year, Price, Color);
         }
 
         public static void ListVehicles () {
-            foreach (Model.LightVehicle vehicle in Controller.LightVehicle.GetLightVehicles ()) {
+            foreach (Model.LightVehicle vehicle in Controller.LightVehicle
+                .GetLightVehicles ()) 
+            {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (vehicle);
             }

@@ -49,7 +49,9 @@ namespace Views {
             lblCPF.Text = "C.P.F.";
             lblCPF.Location = new Point (20, 140);
             lblCPF.Size = new Size (60, 40);
-            lblCPF.LinkClicked += new LinkLabelLinkClickedEventHandler(this.helpLink);
+            lblCPF.LinkClicked += new LinkLabelLinkClickedEventHandler(
+                this.helpLink
+            );
 
             txtCPF = new MaskText (180, 140, 100, 18, "000.000.000-00");
 
@@ -82,10 +84,28 @@ namespace Views {
 
             checkMail = new CheckBox ();
             checkMail.Location = new Point (20, 320);
-            lblNews = new LibLabel ("Deseja receber newslaters", 50, 320, 160, 40);
+            lblNews = new LibLabel (
+                "Deseja receber newslaters",
+                50,
+                320,
+                160,
+                40
+            );
 
-            btnCancelar = new LibButton ("Cancelar", 60, 380, 100, Click: this.btnConfirmarClick);
-            btnConfirmar = new LibButton ("Confirmar", 180, 380, 100, Click: this.btnConfirmarClick);
+            btnCancelar = new LibButton (
+                "Cancelar",
+                60,
+                380,
+                100,
+                Click: this.btnConfirmarClick
+            );
+            btnConfirmar = new LibButton (
+                "Confirmar",
+                180,
+                380,
+                100,
+                Click: this.btnConfirmarClick
+            );
 
             this.Size = new Size (350, 450);
             this.Controls.Add (lblNome);
@@ -120,7 +140,12 @@ namespace Views {
                         this.nmDiasDev.Value
                     );
                 } catch (Exception error) {
-                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        error.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
                 
             }
@@ -128,13 +153,7 @@ namespace Views {
         }
 
         private void helpLink(object sender, LinkLabelLinkClickedEventArgs e){
-			this.lblCPF.LinkVisited = true;
-
-			Process.Start(
-				"google-chrome",
-				"https://www.4devs.com.br/validador_cpf"
-			);
-		}
+			this.lblCPF.LinkVisited = true;		}
 
         private void loadForm(object sender, EventArgs e) {
             this.txtNome.Text = this.customer.Name;

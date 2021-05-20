@@ -16,12 +16,21 @@ namespace Views {
             string Birth = Console.ReadLine ();
             Console.WriteLine ("Informe o CPF do Cliente: ");
             string Identification = Console.ReadLine ();
-            Console.WriteLine ("Informe a quantidade de dias de devolução do Cliente: ");
+            Console.WriteLine (
+                "Informe a quantidade de dias de devolução do Cliente: "
+            );
             string ReturnDays = Console.ReadLine ();
             try {
-                Controller.Customer.CreateCustomer (Name, Birth, Identification, ReturnDays);
+                Controller.Customer.CreateCustomer (
+                    Name, 
+                    Birth,
+                    Identification,
+                    Convert.ToDecimal(ReturnDays)
+                );
             } catch (Exception e) {
-                Console.WriteLine ($"Informações digitadas são incorretas: {e.Message}");
+                Console.WriteLine (
+                    $"Informações digitadas são incorretas: {e.Message}"
+                );
             }
         }
 
@@ -35,7 +44,9 @@ namespace Views {
                 Console.WriteLine(e.Message);
                 return;
             }
-            Console.WriteLine ("Informe o Campo para Alteração: (1-Nome;2-C.P.F.)");
+            Console.WriteLine (
+                "Informe o Campo para Alteração: (1-Nome;2-C.P.F.)"
+            );
             string field = Console.ReadLine();
 
             Console.WriteLine ("Informe o Valor para Alteração:");
@@ -62,7 +73,9 @@ namespace Views {
         /// Shows the customer's list
         /// </summary>
         public static void ListCustomers () {            
-            foreach (Model.Customer customer in Controller.Customer.ListCustomers ()) {
+            foreach (Model.Customer customer in Controller.Customer
+                .ListCustomers ()) 
+            {
                 Console.WriteLine ("---------------------------");
                 Console.WriteLine (customer);
             }

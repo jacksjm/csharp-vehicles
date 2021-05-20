@@ -28,7 +28,8 @@ namespace Model {
         }
 
         public static IEnumerable<RentLightVehicle> GetVehicles(int RentId) {
-            return from vehicle in Context.RentsLightVehicles where vehicle.RentId == RentId select vehicle;
+            return from vehicle in Context.RentsLightVehicles where vehicle
+                .RentId == RentId select vehicle;
         }
 
         public static int GetCount(int RentId) {
@@ -45,7 +46,8 @@ namespace Model {
 
             foreach (RentLightVehicle item in vehicles)
             {
-                LightVehicle vehicle = LightVehicle.GetLightVehicle(item.LightVehicleId);
+                LightVehicle vehicle = LightVehicle
+                    .GetLightVehicle(item.LightVehicleId);
                 total += vehicle.Price;
             }
 

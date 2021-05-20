@@ -13,7 +13,10 @@ namespace csharp_vehicle.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation(
+                            "MySql:ValueGenerationStrategy", 
+                            MySqlValueGenerationStrategy.IdentityColumn
+                        ),
                     Name = table.Column<string>(nullable: true),
                     Birth = table.Column<DateTime>(nullable: false),
                     Identification = table.Column<string>(nullable: true),
@@ -29,7 +32,10 @@ namespace csharp_vehicle.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation(
+                            "MySql:ValueGenerationStrategy", 
+                            MySqlValueGenerationStrategy.IdentityColumn
+                        ),
                     Brand = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false),
@@ -46,7 +52,10 @@ namespace csharp_vehicle.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation(
+                            "MySql:ValueGenerationStrategy", 
+                            MySqlValueGenerationStrategy.IdentityColumn
+                        ),
                     Brand = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false),
@@ -63,7 +72,10 @@ namespace csharp_vehicle.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation(
+                            "MySql:ValueGenerationStrategy", 
+                            MySqlValueGenerationStrategy.IdentityColumn
+                        ),
                     CustomerId = table.Column<int>(nullable: false),
                     RentDate = table.Column<DateTime>(nullable: false)
                 },
@@ -83,7 +95,10 @@ namespace csharp_vehicle.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation(
+                            "MySql:ValueGenerationStrategy", 
+                            MySqlValueGenerationStrategy.IdentityColumn
+                        ),
                     RentId = table.Column<int>(nullable: false),
                     HeavyVehicleId = table.Column<int>(nullable: false)
                 },
@@ -91,7 +106,8 @@ namespace csharp_vehicle.Migrations
                 {
                     table.PrimaryKey("PK_RentsHeavyVehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RentsHeavyVehicles_HeavyVehicles_HeavyVehicleId",
+                        name:
+                        "FK_RentsHeavyVehicles_HeavyVehicles_HeavyVehicleId",
                         column: x => x.HeavyVehicleId,
                         principalTable: "HeavyVehicles",
                         principalColumn: "Id",
@@ -109,7 +125,10 @@ namespace csharp_vehicle.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation(
+                            "MySql:ValueGenerationStrategy", 
+                            MySqlValueGenerationStrategy.IdentityColumn
+                        ),
                     RentId = table.Column<int>(nullable: false),
                     LightVehicleId = table.Column<int>(nullable: false)
                 },
@@ -117,7 +136,8 @@ namespace csharp_vehicle.Migrations
                 {
                     table.PrimaryKey("PK_RentsLightVehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RentsLightVehicles_LightVehicles_LightVehicleId",
+                        name:
+                        "FK_RentsLightVehicles_LightVehicles_LightVehicleId",
                         column: x => x.LightVehicleId,
                         principalTable: "LightVehicles",
                         principalColumn: "Id",

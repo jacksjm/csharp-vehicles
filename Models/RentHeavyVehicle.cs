@@ -28,7 +28,8 @@ namespace Model {
         }
 
         public static IEnumerable<RentHeavyVehicle> GetVehicles(int RentId) {
-            return from vehicle in Context.RentsHeavyVehicles where vehicle.RentId == RentId select vehicle;
+            return from vehicle in Context.RentsHeavyVehicles where vehicle
+                .RentId == RentId select vehicle;
         }
 
         public static double GetTotal(int RentId) {
@@ -41,7 +42,8 @@ namespace Model {
 
             foreach (RentHeavyVehicle item in vehicles)
             {
-                HeavyVehicle vehicle = HeavyVehicle.GetHeavyVehicle(item.HeavyVehicleId);
+                HeavyVehicle vehicle = HeavyVehicle
+                    .GetHeavyVehicle(item.HeavyVehicleId);
                 total += vehicle.Price;
             }
 

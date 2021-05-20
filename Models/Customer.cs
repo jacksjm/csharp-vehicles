@@ -22,8 +22,10 @@ namespace Model {
         /// </summary>
         /// <param name="Name">The Customer's name</param>
         /// <param name="Birth">The Customer's birthday</param>
-        /// <param name="Identification">The Customer's individual identification, like brazilian C.P.F.</param>
-        /// <param name="ReturnDays">The number of return days the customer has</param>
+        /// <param name="Identification">The Customer's individual 
+        ///     identification, like brazilian C.P.F.</param>
+        /// <param name="ReturnDays">The number of return days the 
+        ///     customer has</param>
         public Customer (
             string Name,
             DateTime Birth,
@@ -47,7 +49,8 @@ namespace Model {
         /// <returns>Customer's text</returns>
         public override string ToString () {
             return String.Format(
-                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d} - Dias p/ Devolução: {3} - Qtd. Locações {4}",
+                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d}" + 
+                    " - Dias p/ Devolução: {3} - Qtd. Locações {4}",
                 this.Id,
                 this.Name,
                 this.Birth,
@@ -95,7 +98,8 @@ namespace Model {
         }
 
         public static List<Customer> ArrayCustomers () {
-            return (from customer in Context.Customers select customer).ToList();
+            return (from customer in Context.Customers select customer)
+                .ToList();
         }
 
         public static int GetCount () {
@@ -121,7 +125,8 @@ namespace Model {
             // from customer in Context.Customers select customer;
 
             // "SELECT * FROM customer WHERE id = '" + Id + "'";
-            IEnumerable<Customer> query = from customer in Context.Customers where customer.Id == Id select customer;
+            IEnumerable<Customer> query = from customer in Context
+                .Customers where customer.Id == Id select customer;
 
             return query.First();
             

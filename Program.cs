@@ -254,23 +254,41 @@ namespace csharp_vehicles {
 
             private void btnUpdateCustomerClick (object sender, EventArgs e) {
                 string id = "";
-                new InputBox("Alterar o Cliente", "Informe o ID do Cliente", ref id);
+                new InputBox(
+                    "Alterar o Cliente",
+                    "Informe o ID do Cliente",
+                    ref id
+                );
                 try {
                     CustomerCreate customerUpdate = new CustomerCreate (id);
                     customerUpdate.Show ();
                 } catch (Exception error) {
-                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        error.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
             }
 
             private void btnRemoveCustomerClick (object sender, EventArgs e) {
                 string id = "";
-                new InputBox("Remover o Cliente", "Informe o ID do Cliente", ref id);
+                new InputBox(
+                    "Remover o Cliente",
+                    "Informe o ID do Cliente",
+                    ref id
+                );
 
                 try {
                     Controller.Customer.DeleteCustomer(id);
                 } catch (Exception error) {
-                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        error.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
                 
             }
