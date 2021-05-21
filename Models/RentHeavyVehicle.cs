@@ -7,9 +7,9 @@ namespace Model {
     public class RentHeavyVehicle {
         public int Id { set; get; }
         public int RentId { set; get; }
-        public virtual Rent Rent { set; get; }
+        public Rent Rent { set; get; }
         public int HeavyVehicleId { set; get; }
-        public virtual HeavyVehicle HeavyVehicle { set; get; }
+        public HeavyVehicle HeavyVehicle { set; get; }
 
         public RentHeavyVehicle() {
             
@@ -18,29 +18,36 @@ namespace Model {
             Rent Rent,
             HeavyVehicle HeavyVehicle
         ) {
-            Context db = new Context();
-            //this.Id = db.RentsHeavyVehicles.Count;
-            //this.Rent = Rent;
+            this.Id = Context.RentsHeavyVehicles.Count;
+            this.Rent = Rent;
             this.RentId = Rent.Id;
             //this.HeavyVehicle = HeavyVehicle;
             this.HeavyVehicleId = HeavyVehicle.Id;
 
-            db.RentsHeavyVehicles.Add(this);
-            db.SaveChanges();
+            Context.RentsHeavyVehicles.Add(this);
         }
 
         public static IEnumerable<RentHeavyVehicle> GetVehicles(int RentId) {
-            Context db = new Context();
-            return from vehicle in db.RentsHeavyVehicles where vehicle.RentId == RentId select vehicle;
+            return from vehicle in Context.RentsHeavyVehicles where vehicle
+                .RentId == RentId select vehicle;
         }
 
         public static double GetTotal(int RentId) {
-            Context db = new Context();
-            return (
-                from vehicle in db.RentsHeavyVehicles 
+            double total = 0;
+            IEnumerable<RentHeavyVehicle> vehicles = (
+                from vehicle in Context.RentsHeavyVehicles 
                 where vehicle.RentId == RentId 
-                select vehicle.HeavyVehicle.Price
-            ).Sum();
+                select vehicle
+            );
+
+            foreach (RentHeavyVehicle item in vehicles)
+            {
+                HeavyVehicle vehicle = HeavyVehicle
+                    .GetHeavyVehicle(item.HeavyVehicleId);
+                total += vehicle.Price;
+            }
+
+            return total;
         }
 
         public static int GetCount(int RentId) {

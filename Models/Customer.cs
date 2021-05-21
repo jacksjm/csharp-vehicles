@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using Repository;
 
 namespace Model {
@@ -10,7 +9,6 @@ namespace Model {
     /// </summary>
     public class Customer {
         public int Id { set; get; } // Identificador Único (ID)
-        [Required]
         public string Name { set; get; } // Nome
         public DateTime Birth { set; get; } // Data de Nascimento
         public string Identification { set; get; } // C.P.F.
@@ -24,23 +22,25 @@ namespace Model {
         /// </summary>
         /// <param name="Name">The Customer's name</param>
         /// <param name="Birth">The Customer's birthday</param>
-        /// <param name="Identification">The Customer's individual identification, like brazilian C.P.F.</param>
-        /// <param name="ReturnDays">The number of return days the customer has</param>
+        /// <param name="Identification">The Customer's individual 
+        ///     identification, like brazilian C.P.F.</param>
+        /// <param name="ReturnDays">The number of return days the 
+        ///     customer has</param>
         public Customer (
             string Name,
             DateTime Birth,
             string Identification,
             int ReturnDays
         ) {
-            Context db = new Context();
-            //this.Id = db.Customers.Count;
+        
+            this.Id = Context.Customers.Count;
             this.Name = Name;
             this.Birth = Birth;
             this.Identification = Identification;
             this.ReturnDays = ReturnDays;
 
-            db.Customers.Add (this);
-            db.SaveChanges();
+            Context.Customers.Add (this);
+        
         }
 
         /// <summary>
@@ -49,7 +49,8 @@ namespace Model {
         /// <returns>Customer's text</returns>
         public override string ToString () {
             return String.Format(
-                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d} - Dias p/ Devolução: {3} - Qtd. Locações {4}",
+                "Id: {0} - Nome: {1} - Data de Nascimento: {2:d}" + 
+                    " - Dias p/ Devolução: {3} - Qtd. Locações {4}",
                 this.Id,
                 this.Name,
                 this.Birth,
@@ -93,8 +94,12 @@ namespace Model {
         /// </summary>
         /// <returns>Returns the customer list collection</returns>
         public static IEnumerable<Customer> GetCustomers () {
-            Context db = new Context();
-            return from customer in db.Customers select customer;
+            return from customer in Context.Customers select customer;
+        }
+
+        public static List<Customer> ArrayCustomers () {
+            return (from customer in Context.Customers select customer)
+                .ToList();
         }
 
         public static int GetCount () {
@@ -110,19 +115,18 @@ namespace Model {
         /// </summary>
         /// <param name="customer">The customer's object</param>
         public static void AddCustomer (Customer customer) {
-            Context db = new Context();
-            db.Customers.Add (customer);
+            Context.Customers.Add (customer);
         }
 
         public static Customer GetCustomer(int Id) {
-            // Context db = new Context();
+        
 
             // SELECT * FROM customer;
             // from customer in Context.Customers select customer;
 
             // "SELECT * FROM customer WHERE id = '" + Id + "'";
-            Context db = new Context();
-            IEnumerable<Customer> query = from customer in db.Customers where customer.Id == Id select customer;
+            IEnumerable<Customer> query = from customer in Context
+                .Customers where customer.Id == Id select customer;
 
             return query.First();
             
@@ -130,29 +134,15 @@ namespace Model {
         }
 
         public static Customer UpdateCustomer(
-            Customer customer,
-            int field,
-            string value
+            Customer customer
         ) {
-            switch(field){
-                case 1:
-                    customer.Name = value;
-                    break;
-                case 2:
-                    customer.Identification = value;
-                    break;
-            }
-            Context db = new Context();
-            db.Customers.Update(customer);
-            db.SaveChanges();
+            Context.Customers.Update(customer);
             return customer;
         }
 
         public static Customer DeleteCustomer(int id) {
             Customer customer = GetCustomer(id);
-            Context db = new Context();
-            db.Customers.Remove(customer);
-            db.SaveChanges();
+            Context.Customers.Remove(customer);
             return customer;
         }
     }

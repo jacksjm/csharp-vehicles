@@ -7,7 +7,7 @@ namespace Model {
     public class Rent {
         public int Id { set; get; } // Identificador Único (ID)
         public int CustomerId { set; get; } // Identificador Único do Cliente
-        public virtual Customer Customer { set; get; } // Cliente
+        public Customer Customer { set; get; } // Cliente
         public DateTime RentDate { set; get; } // Data de Locação
 
         public Rent() {
@@ -19,33 +19,25 @@ namespace Model {
             List<LightVehicle> LightVehicles,
             List<HeavyVehicle> HeavyVehicles
         ) {
-            Context db = new Context();
-            //this.Id = db.Rents.Count;
-            //this.Customer = Customer;
+            this.Id = Context.Rents.Count;
+            this.Customer = Customer;
             this.CustomerId = Customer.Id;
             this.RentDate = RentDate;
+            
+            Context.Rents.Add (this);
 
-            db.Rents.Add (this);
-            db.SaveChanges();
-
-            Rent rent = GetRents().Last();
             foreach (LightVehicle vehicle in LightVehicles) {
-                RentLightVehicle rentLightVehicle = new (rent, vehicle);
+                new RentLightVehicle(this, vehicle);
             }
 
             foreach (HeavyVehicle vehicle in HeavyVehicles) {
-                RentHeavyVehicle rentHeavyVehicle = new (rent, vehicle);
+                new RentHeavyVehicle(this, vehicle);
             }
         }
 
         public double GetRentValue() {
             double total = 0;
-
-            foreach (RentLightVehicle vehicle in RentLightVehicle.GetVehicles(this.Id)) {
-                LightVehicle lightVehicle = LightVehicle.GetLightVehicle(vehicle.LightVehicleId);
-                total += lightVehicle.Price;
-            }
-
+            total += RentLightVehicle.GetTotal(this.Id);
             total += RentHeavyVehicle.GetTotal(this.Id);
             
             return total;
@@ -53,16 +45,16 @@ namespace Model {
 
         public DateTime GetReturnDate() {
             Customer customer = Customer.GetCustomer(this.CustomerId);
-            int ReturnDays = customer.ReturnDays;
 
-            return this.RentDate.AddDays(ReturnDays);
+            return this.RentDate.AddDays(customer.ReturnDays);
         }
 
         public override string ToString () {
             // Data da Locação: 04/03/2021
             // Id: 0 - Nome: João
             string Print = String.Format (
-                "Data da Locação: {0:d} - Data da Devolução: {1:d} - Valor: {2:C}\nCliente: {3}",
+                "Data da Locação: {0:d} - Data da Devolução: "
+                    + "{1:d} - Valor: {2:C}\nCliente: {3}",
                 this.RentDate,
                 this.GetReturnDate(),
                 this.GetRentValue(),
@@ -70,9 +62,12 @@ namespace Model {
             );
             Print += "\nVeículos Leves Locados: ";
             if (RentLightVehicle.GetCount(this.Id) > 0) {
-                foreach (RentLightVehicle vehicle in RentLightVehicle.GetVehicles(this.Id)) {
-                    LightVehicle lightVehicle = LightVehicle.GetLightVehicle(vehicle.LightVehicleId);
-                    Print += "\n    " + lightVehicle;
+                foreach (RentLightVehicle item in RentLightVehicle
+                    .GetVehicles(this.Id)) 
+                {
+                    LightVehicle vehicle = LightVehicle
+                        .GetLightVehicle(item.LightVehicleId);
+                    Print += "\n    " + vehicle;
                 }
             } else {
                 Print += "\n    Nada Consta";
@@ -80,9 +75,12 @@ namespace Model {
 
             Print += "\nVeículos Pesados Locados: ";
             if (RentHeavyVehicle.GetCount(this.Id) > 0) {
-                foreach (RentHeavyVehicle vehicle in RentHeavyVehicle.GetVehicles(this.Id)) {
-                    HeavyVehicle heavyVehicle = HeavyVehicle.GetHeavyVehicle(vehicle.HeavyVehicleId);
-                    Print += "\n    " + heavyVehicle;
+                foreach (RentHeavyVehicle item in RentHeavyVehicle
+                    .GetVehicles(this.Id)) 
+                {
+                    HeavyVehicle vehicle = HeavyVehicle
+                        .GetHeavyVehicle(item.HeavyVehicleId);
+                    Print += "\n    " + vehicle;
                 }
             } else {
                 Print += "\n    Nada Consta";
@@ -107,13 +105,12 @@ namespace Model {
         }
 
         public static IEnumerable<Rent> GetRents () {
-            Context db = new Context();
-            return from rent in db.Rents select rent;
+            return from rent in Context.Rents select rent;
         }
 
         public static int GetCount(int CustomerId) {
-            Context db = new Context();
-            return (from rent in db.Rents where rent.CustomerId == CustomerId select rent).Count();
+            return (from rent in Context.Rents where rent
+                .CustomerId == CustomerId select rent).Count();
         }
 
     }

@@ -20,10 +20,10 @@ namespace Controller {
             string Name,
             string StringBirth,
             string Identification,
-            string ReturnDays
+            decimal ReturnDays
         ) {
             // Checks if the Identification is in the pattern 999.999.999-99
-            Regex rgx = new ("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
+            Regex rgx = new Regex("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
             if (!rgx.IsMatch (Identification)) {
                 throw new Exception ("C.P.F. Inválido");
             }
@@ -61,6 +61,10 @@ namespace Controller {
             return Model.Customer.GetCustomers ();
         }
 
+        public static List<Model.Customer> ArrayCustomers () {
+            return Model.Customer.ArrayCustomers ();
+        }
+
         public static Model.Customer GetCustomer (string StringId) {
             int Id = Convert.ToInt32(StringId);
             Model.Customer LastCustomer = Model.Customer.GetLast();
@@ -73,24 +77,10 @@ namespace Controller {
         }
 
         public static Model.Customer UpdateCustomer(
-            Model.Customer customer,
-            string opcao,
-            string value
+            Model.Customer customer
         ) {
-            int field = Convert.ToInt32(opcao);
-            switch(field) {
-                case 1:
-                    return Model.Customer.UpdateCustomer(customer, field, value);
-                case 2:
-                    // Checks if the Identification is in the pattern 999.999.999-99
-                    Regex rgx = new ("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
-                    if (!rgx.IsMatch (value)) {
-                        throw new Exception ("C.P.F. Inválido");
-                    }
-                    return Model.Customer.UpdateCustomer(customer, field, value);
-                default:
-                    throw new Exception("Operacao inválida");
-            }
+            return Model.Customer
+                    .UpdateCustomer(customer);
         }
 
         public static void DeleteCustomer (string StringId) {
@@ -98,7 +88,7 @@ namespace Controller {
             try {
                 Model.Customer.DeleteCustomer (Id);
             } catch {
-                Console.WriteLine("Exclusão não permitida ou ID Inválido");
+                throw new Exception("Exclusão não permitida ou ID Inválido");
             }
             
         }

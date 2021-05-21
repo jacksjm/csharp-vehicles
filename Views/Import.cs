@@ -1,6 +1,6 @@
 using System;
 
-namespace View {
+namespace Views {
     public static class Import {
         public static void DBImport () {
             Console.WriteLine ("\n---------------------------");

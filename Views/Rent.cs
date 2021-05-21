@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace View {
+namespace Views {
     public class Rent {
         public static void CreateRent () {
             int opt;
             int optLight;
             int optHeavy;
-            List<Model.LightVehicle> LightVehicles = new ();
-            List<Model.HeavyVehicle> HeavyVehicles = new ();
+            List<Model.LightVehicle> LV = new List<Model.LightVehicle>();
+            List<Model.HeavyVehicle> HV = new List<Model.HeavyVehicle>();
             Console.WriteLine ("Informe o Id do Cliente: ");
             string IdCustomer = Console.ReadLine ();
             Console.WriteLine ("Informe a Data da Locação: ");
@@ -21,12 +21,15 @@ namespace View {
                     Console.WriteLine ("Informe o Id do Veículo Leve: ");
                     try {
                         int IdVehicle = Convert.ToInt32 (Console.ReadLine ());
-                        Model.LightVehicle vehicle = Controller.LightVehicle.GetLightVehicle (IdVehicle);
-                        LightVehicles.Add (vehicle);
+                        Model.LightVehicle vehicle = Controller.LightVehicle
+                            .GetLightVehicle (IdVehicle);
+                        LV.Add (vehicle);
                     } catch (Exception e) {
                         Console.WriteLine (e.Message);
                     }
-                    Console.WriteLine ("Deseja informar outro veículo? [1] Sim");
+                    Console.WriteLine (
+                        "Deseja informar outro veículo? [1] Sim"
+                    );
                     optLight = Convert.ToInt32 (Console.ReadLine ());
                 } while (optLight == 1);
             }
@@ -37,20 +40,30 @@ namespace View {
                     Console.WriteLine ("Informe o Id do Veículo Pesado: ");
                     try {
                         int IdVehicle = Convert.ToInt32 (Console.ReadLine ());
-                        Model.HeavyVehicle vehicle = Controller.HeavyVehicle.GetHeavyVehicle (IdVehicle);
-                        HeavyVehicles.Add (vehicle);
+                        Model.HeavyVehicle vehicle = Controller.HeavyVehicle
+                            .GetHeavyVehicle (IdVehicle);
+                        HV.Add (vehicle);
                     } catch (Exception e) {
                         Console.WriteLine (e.Message);
                     }
-                    Console.WriteLine ("Deseja informar outro veículo? [1] Sim");
+                    Console.WriteLine (
+                        "Deseja informar outro veículo? [1] Sim"
+                    );
                     optHeavy = Convert.ToInt32 (Console.ReadLine ());
                 } while (optHeavy == 1);
             }
 
             try {
-                Controller.Rent.CreateRent (IdCustomer, RentDate, LightVehicles, HeavyVehicles);
+                Controller.Rent.CreateRent (
+                    IdCustomer,
+                    RentDate,
+                    LV,
+                    HV
+                );
             } catch (Exception e) {
-                Console.WriteLine ($"Informações digitadas são incorretas: {e.Message}");
+                Console.WriteLine (
+                    $"Informações digitadas são incorretas: {e.Message}"
+                );
             }
         }
 
