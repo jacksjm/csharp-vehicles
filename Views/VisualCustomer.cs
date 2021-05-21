@@ -9,7 +9,7 @@ using Views.Libs;
 
 namespace Views {
     public class CustomerCreate : LibForm {
-        private Model.Customer customer;
+        private Model.Customer customer = new Model.Customer();
         private LibLabel lblNome;
         private LibLabel lblDtNasc;
         private LinkLabel lblCPF;
@@ -29,15 +29,6 @@ namespace Views {
 
         public CustomerCreate (string id = "") {
             this.Text = "Cadastro de Cliente";
-            if (!id.Trim ().Equals ("")) {
-                try {
-                    this.customer = Controller.Customer.GetCustomer (id);
-                } catch (Exception error) {
-                    throw error;
-                }
-
-                this.Load += new EventHandler (this.loadForm);
-            }
 
             lblNome = new LibLabel ("Nome", 20, 20, 40, 20);
             txtNome = new LibTextBox (180, 20);
@@ -53,7 +44,7 @@ namespace Views {
                 this.helpLink
             );
 
-            txtCPF = new MaskText (180, 140, 100, 18, "000.000.000-00");
+            txtCPF = new MaskText (180, 140, 100, 18, "000,000,000-00");
 
             lblDiasDev = new LibLabel ("Dias Dev.", 20, 200, 60, 40);
             nmDiasDev = new Numeric (180, 200, 5, 20);
@@ -107,6 +98,22 @@ namespace Views {
                 Click : this.btnConfirmarClick
             );
 
+            if (!id.Trim ().Equals ("")) {
+                try {
+                    this.customer = Controller.Customer.GetCustomer (id);
+                } catch (Exception error) {
+                    throw error;
+                }
+
+                // this.Load += new EventHandler (this.loadForm);
+                this.txtNome.Text = this.customer.Name;
+                this.txtDtNasc.Text = this.customer.Birth.ToString ();
+                this.txtCPF.Text = this.customer.Identification;
+                this.nmDiasDev.Value = this.customer.ReturnDays;
+            } else {
+                this.customer.Id = -1;
+            }
+
             this.Size = new Size (350, 450);
             this.Controls.Add (lblNome);
             this.Controls.Add (txtNome);
@@ -133,12 +140,26 @@ namespace Views {
 
             if (resultado == DialogResult.Yes) {
                 try {
-                    Controller.Customer.CreateCustomer (
-                        this.txtNome.Text,
-                        this.txtDtNasc.Text,
-                        this.txtCPF.Text,
-                        this.nmDiasDev.Value
-                    );
+                    if (this.customer.Id >= 0) {
+                        this.customer.Name = this.txtNome.Text;
+                        this.customer.Identification = this.txtCPF.Text;
+                        this.customer.Birth = Convert.ToDateTime(
+                            this.txtDtNasc.Text
+                        );
+                        this.customer.ReturnDays = Convert.ToInt32(
+                            this.nmDiasDev.Value
+                        );
+                        Controller.Customer.UpdateCustomer (
+                            this.customer
+                        );
+                    } else {
+                        Controller.Customer.CreateCustomer (
+                            this.txtNome.Text,
+                            this.txtDtNasc.Text,
+                            this.txtCPF.Text,
+                            this.nmDiasDev.Value
+                        );
+                    }
                 } catch (Exception error) {
                     MessageBox.Show (
                         error.Message,

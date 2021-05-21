@@ -134,18 +134,8 @@ namespace Model {
         }
 
         public static Customer UpdateCustomer(
-            Customer customer,
-            int field,
-            string value
+            Customer customer
         ) {
-            switch(field){
-                case 1:
-                    customer.Name = value;
-                    break;
-                case 2:
-                    customer.Identification = value;
-                    break;
-            }
             Context.Customers.Update(customer);
             return customer;
         }
